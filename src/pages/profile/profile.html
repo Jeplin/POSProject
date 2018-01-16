@@ -1,0 +1,67 @@
+<!--
+  Generated template for the ProfilePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar color="header">
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Profile</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+
+<ion-content>
+  <div id="mainOuterDiv">
+    <div id="midLayer">
+      <div id="mainDiv">
+        <div class="DetailDiv">
+          <table>
+            <tr>
+                <td>Username : </td>
+                <td>{{username}}</td>
+              </tr>
+              <tr>
+                  <td>Password : </td>
+                  <td>***********</td>
+                </tr>
+                
+              
+          </table>
+        </div>
+        <div class="DetailDiv">
+            <table>
+                <tr>
+                  <td>Name : </td>
+                  <td>{{name}}</td>
+                </tr>
+                <tr>
+                    <td>E-mail : </td>
+                    <td>{{email}}</td>
+                  </tr>
+                  <tr>
+                      <td>Contact : </td>
+                      <td>{{contact}}</td>
+                    </tr>
+            </table>
+        </div>
+          <div class="DetailDiv">
+            <table>
+              <tr>
+                  <td>Current Address : </td>
+                  <td>{{curraddress}}</td>
+                </tr>
+                <tr>
+                    <td>Permanent Address : </td>
+                    <td>{{perAddress}}</td>
+                  </tr>
+        </table>
+          </div>
+              
+      </div>
+    </div>
+  </div>
+</ion-content>

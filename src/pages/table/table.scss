@@ -1,0 +1,136 @@
+page-table {
+
+    #mainOuterDiv{
+        width: 100%;
+        height:100%;
+
+        position: relative;
+        overflow-y: hidden;
+
+        background: red;
+    }
+    table{
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        border:2px solid #d3d3d3;
+    }
+    .sideMenu{
+        background: #d3d3d3;
+        position: absolute;
+        left: 0;
+        margin: 0;
+        width: 35%;
+        height: 100%;
+        overflow: auto;
+        overflow-x: hidden;
+        border-right: 2px solid gray;
+    }
+    .menuHead ion-label{
+        text-align: center;
+        background: #d3d3d3;
+        margin: 0;
+        width: 100%;
+        padding: 10px;
+        font-weight: bold;
+        border-bottom: 2px solid gray;
+    }  
+    .tbl1{
+        padding: 4px 0;
+        background: #d3d3d3;
+    }
+
+    .container{
+        background: white;
+        margin-left: 35%;
+        width: 75%;
+        height: 100%;
+        position: relative;
+
+        overflow: auto;
+        overflow-x: hidden;
+    }
+    .containerHead{
+        border-bottom: 2px solid #d3d3d3;
+    }
+    .headCss{
+        width: 100%;
+        font-weight: bold;
+        margin: 0;
+        text-align: center;
+        padding: 10px;
+    }
+    .containerBody{
+        padding: 0;
+        margin: 0;
+    }
+    .pieChart{
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .pieDiv{
+        display: block;
+        margin: -10px -35%;
+        width: 160%;
+        height: 100%;
+        position: relative;
+        text-align: center;
+        background: transparent;
+    }
+    ion-card{
+        background: transparent;
+    }
+    ion-card-content{
+        background: transparent;
+    }
+    
+
+    // .canvasDiv{
+    //     display: block;
+    //     width:160%;
+    //     height: 100%;
+    //     margin-left: -35%;
+    //     position: relative;
+    //     text-align: center;
+    // }
+    .canvasCenter{
+        display: none;
+        position: absolute;
+        top: 18.6%;
+        width: 33%;
+        left: 33.5%;
+        height: 62%;
+        display:inline-block;
+        margin:auto;
+        background: yellow;
+
+        border-radius: 50%;
+        background: url("../assets/imgs/cattelan.jpg");
+        background-repeat: repeat;
+    }
+    canvas{
+        width: 100%;
+        height: 100%;
+        
+        
+    }
+    .scroll-content {
+        background-color: map-get($colors, light);
+    }
+    .orderMenuHead{
+        font-weight: bold;
+        padding: 5px 0;
+        border-bottom: 2px solid #d3d3d3;
+    }
+    .orderMenuHead td{
+        padding: 5px 0;
+        border-left: 2px solid #d3d3d3;
+        border-right: 2px solid #d3d3d3;
+    }
+    .bodyDiv td{
+        padding: 5px 0;
+    }
+    
+}

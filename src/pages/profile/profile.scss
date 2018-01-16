@@ -1,0 +1,42 @@
+page-profile {
+
+    #mainOuterDiv{
+        width: 100%;
+        height: 100%;
+        position: relative;
+
+        background: url("../assets/imgs/1.jpg");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+
+    }
+    #midLayer{
+        width: 100%;
+        height: 100%;
+        position: relative;
+        background: rgba(27, 2, 2, 0.5);
+        padding: 10px;
+
+        overflow: auto;
+        overflow-x: hidden;
+        
+    }
+    #mainDiv{
+        width: 100%;
+        padding: 10px;
+        position: relative;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 4px;
+    }
+    .DetailDiv{
+        padding: 10px;
+        width: 100%;
+        border-radius: 4px;
+        background: white;
+        font-size: 100%;
+        margin-bottom: 10px;
+    }
+    table{
+        width: 100%;
+    }
+}

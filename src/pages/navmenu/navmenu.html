@@ -1,0 +1,38 @@
+<!--
+  Generated template for the NavmenuPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-menu [content]="content">
+  <ion-header color="header">
+    <ion-toolbar color="header">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <div id="profileHeader">
+      <div id="headerDiv">
+        <div class="profileDiv">
+          <ion-label>Jeplin Devbarma</ion-label>
+          <button ion-button icon-only (click)="profileClicked()"><ion-icon name="options"></ion-icon></button>
+        </div>
+      </div>
+    </div>
+    <div class="navOptionS">
+      <ion-list no-lines default-none>
+        <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+          {{p.title}}
+        </button>
+      </ion-list>
+    </div>
+    <div class="logoutDiv">
+        <button ion-item full menuClose default-none no-lines (click)="logoutMethod()">Logout</button>
+    </div>
+  </ion-content>
+
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
