@@ -6,6 +6,7 @@ import { ProfilePage } from '../profile/profile';
 import { AttendencePage } from '../attendence/attendence';
 import { Home1Page } from '../home1/home1';
 import { LoginPage } from '../login/login';
+import { TablePage } from '../table/table';
 
 
 /**
@@ -23,7 +24,7 @@ import { LoginPage } from '../login/login';
 export class NavmenuPage {
   @ViewChild(Nav) nav: Nav;
   
-    rootPage: any = Home1Page;
+    rootPage: any = TablePage;
   
     pages: Array<{title: string, component: any}>;
 
@@ -51,7 +52,7 @@ export class NavmenuPage {
   }
 
   profileClicked(){
-    this.navCtrl.setRoot(ProfilePage);
+    this.nav.setRoot(ProfilePage);
   }
 
   logoutMethod(){

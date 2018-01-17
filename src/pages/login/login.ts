@@ -17,11 +17,31 @@ import { FloorCountProvider } from '../../providers/floor-count/floor-count';
 })
 export class LoginPage {
 
+  showPasswordFlag:boolean;
+  isShowPassword:boolean=true;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,private floorCount:FloorCountProvider) {
+    this.mainDisplayMethod();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+  }
+
+  mainDisplayMethod(){
+    this.isShowPassword=true;
+  }
+
+  passwordShow(){
+    console.log("Div clicked");
+    if(this.isShowPassword){
+      console.log("CheckBox Clicked :",this.isShowPassword);
+      this.isShowPassword=false;
+    }
+    else{
+      console.log("CheckBox Clicked :",this.isShowPassword);
+      this.isShowPassword=true;
+    }
   }
 
   loginMethod(){

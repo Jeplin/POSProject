@@ -7,6 +7,8 @@ import { TableDetailsProvider } from '../../providers/table-details/table-detail
 import { FloorCountProvider } from '../../providers/floor-count/floor-count';
 import { OrdermenuProvider } from '../../providers/ordermenu/ordermenu';
 
+//import { trigger, state, style, animate, transition } from '@angular/animations';
+
 /**
  * Generated class for the TablePage page.
  *
@@ -18,7 +20,8 @@ import { OrdermenuProvider } from '../../providers/ordermenu/ordermenu';
 @Component({
   selector: 'page-table',
   templateUrl: 'table.html',
-})
+  
+  })
 export class TablePage {
   isOrdered: boolean;
   orderedmenuList: any;
@@ -45,6 +48,18 @@ export class TablePage {
   floorNo:number;
   tableNo:number;
 
+  isPOPUP:boolean = false;
+  isDeleted:boolean=false;
+
+
+  // temp storage variable
+  tempItemName:string;
+  tempItemPrice:number;
+  tempItemQuant:number;
+  tempDelIndex:number;
+
+
+
   constructor(public navCtrl: NavController, public navParams: NavParams,private menuData:ApidataProvider,private tableDetail:TableDetailsProvider,private floorDetail:FloorCountProvider,private orderMenu:OrdermenuProvider) {
     this.getMenuData();
 
@@ -66,9 +81,9 @@ export class TablePage {
 
     this.tableData=this.tableDetail.getTableDetails();
 
-    console.log("Table Data : ",this.tableData["table_capacity"]);
-    let capCity=this.tableData["table_capacity"];
-    this.prepareChartData(capCity);
+    //console.log("Table Data : ",this.tableData["table_capacity"]);
+    //let capCity=this.tableData["table_capacity"];
+    //this.prepareChartData(capCity);
   }
   prepareChartData(capCity){
     if(capCity>1){
@@ -102,10 +117,17 @@ export class TablePage {
   }
 
   getMenuData(){
-    this.menuData.getMenuData().subscribe(data =>{
-      console.log("Menu List : "+data);
-      this.menuList=data;
-    });
+    // this.menuData.getMenuData().subscribe(data =>{
+    //   console.log("Menu List : "+data);
+    //   this.menuList=data;
+    // });
+
+    this.menuList=[{item_name:"Item1 sds",item_price:20},
+                  {item_name:"Item2",item_price:50},
+                  {item_name:"Item3",item_price:40},
+                  {item_name:"Item4",item_price:30},
+                  {item_name:"Item5",item_price:70}
+                ];
   }
 
   displayChart(){ 
@@ -125,8 +147,13 @@ export class TablePage {
   selectMenu(name,price){
     console.log("Menu Clicked : ");
 
-    this.orderMenu.addOrderMenu(name,price);
+    this.orderMenu.addOrderMenu(name,price,1);
 
+    this.tempItemName=name;
+    this.tempItemPrice=price;
+    this.tempItemQuant=1;
+    //this.isPOPUP=true;
+    this.isDeleted=false;
     this.getOrderedMenu();
 
   }
@@ -140,6 +167,40 @@ export class TablePage {
       this.isOrdered=false;
     }
     console.log("Ordered menu list :",this.orderedmenuList);
+  }
+
+  cancelClicked(){
+    this.isPOPUP=false;
+  }
+
+  decreaseQuant(){
+    this.tempItemQuant=this.tempItemQuant-1;
+  }
+
+  increaseQuant(){
+    this.tempItemQuant=this.tempItemQuant+1;
+  }
+
+  okClicked(){
+    this.isPOPUP=false;
+    console.log("Name :",this.tempItemName," Price : ",this.tempItemPrice);
+    if(this.isDeleted){
+      this.orderMenu.updateOrderMenu(this.tempItemName,this.tempItemPrice,this.tempItemQuant,this.tempDelIndex);
+    }else{
+      this.orderMenu.addOrderMenu(this.tempItemName,this.tempItemPrice,this.tempItemQuant);
+    }
+    
+    this.getOrderedMenu();
+
+  }
+
+  orderListClicked(order,index){
+    this.isDeleted=true;
+    this.isPOPUP=true;
+    this.tempItemName=order.itemName;
+    this.tempItemPrice=order.itemPrice;
+    this.tempItemQuant=order.quant;
+    this.tempDelIndex=index;
   }
 
 }

@@ -16,9 +16,18 @@ export class OrdermenuProvider {
     console.log('Hello OrdermenuProvider Provider');
   }
 
-  addOrderMenu(name,price){
-      let item={'itemName':name,'itemPrice':price,'quant':1};
+  addOrderMenu(name,price,quant){
+      
+      let item={'itemName':name,'itemPrice':price,'quant':quant};
       this.orderMenu.push(item);
+  }
+
+  updateOrderMenu(name,price,quant,index){
+
+      console.log("Update :",this.orderMenu[index]);
+      let totPrice=price*quant;
+      this.orderMenu[index].itemPrice=totPrice;
+      this.orderMenu[index].quant=quant;
   }
 
   getOrderedMenu(){

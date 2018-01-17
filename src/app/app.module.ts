@@ -25,6 +25,8 @@ import { TableDetailsProvider } from '../providers/table-details/table-details';
 import { OrdermenuProvider } from '../providers/ordermenu/ordermenu';
 //import {RoundProgressModule} from 'angular-svg-round-progressbar';
 
+// use this -- npm install web-animations-js @angular/animations@4.0.0 --save
+
 
 @NgModule({
   declarations: [

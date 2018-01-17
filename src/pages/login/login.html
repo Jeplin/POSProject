@@ -12,22 +12,36 @@
 
 </ion-header> -->
 
-
 <ion-content>
+
   <div id="mainOuterDiv">
     <div id="midLayer">
-    <div id="mainDiv">
-       <div class="logoDiv">
-          <ion-img src="assets/imgs/logo.png"></ion-img>
-       </div>
-       <div class="container">
-         <input type="text" placeholder="Username">
-         <input type="text" placeholder="Password">
-       </div>
-       <div style="margin-top:10px;">
-         <button ion-button block color="button" (click)="loginMethod()">LOGIN</button>
-       </div>
+    <div id="loginDiv">
+      <div id="logoDiv">
+          <ion-img class="logo" src="assets/imgs/logo.png"></ion-img>
+      </div>
+      <div>
+        <div id="inputDiv">
+          <div class="usernameDiv">
+              <!-- <ion-input type="text" placeholder="Username"></ion-input> -->
+              <input type="text" placeholder="Username" class="textInput">
+          </div>
+          <div class="passwordDiv">
+              <!-- <ion-input type="{{ isShowPassword ? 'password' : 'text' }}" placeholder="Password"></ion-input> -->
+              <input type="{{ isShowPassword ? 'password' : 'text' }}" placeholder="Password">
+              <div class="showPasswordDiv" (click)="passwordShow()">
+                  <ion-icon name="{{ isShowPassword ? 'eye' : 'eye-off' }}"></ion-icon>  
+              </div>          
+            </div>
+        </div>
+        <div id="buttonDiv">
+            <button ion-button full (click)="loginMethod()" class="login" color="button">Login</button>
+        </div>
+      </div>
+    </div> 
     </div>
   </div>
-  </div>
+  
+  
+
 </ion-content>
