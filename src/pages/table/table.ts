@@ -50,7 +50,7 @@ export class TablePage {
 
   isPOPUP:boolean = false;
   isDeleted:boolean=false;
-
+  isConfirm:boolean=false;
 
   // temp storage variable
   tempItemName:string;
@@ -58,7 +58,7 @@ export class TablePage {
   tempItemQuant:number;
   tempDelIndex:number;
 
-
+  tempConfirmOrder:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,private menuData:ApidataProvider,private tableDetail:TableDetailsProvider,private floorDetail:FloorCountProvider,private orderMenu:OrdermenuProvider) {
     this.getMenuData();
@@ -171,10 +171,15 @@ export class TablePage {
 
   cancelClicked(){
     this.isPOPUP=false;
+    this.isDeleted=false;
+    this.isConfirm=false;
   }
 
   decreaseQuant(){
-    this.tempItemQuant=this.tempItemQuant-1;
+    
+    if(this.tempItemQuant>1){
+      this.tempItemQuant=this.tempItemQuant-1;
+    }
   }
 
   increaseQuant(){
@@ -194,6 +199,12 @@ export class TablePage {
 
   }
 
+  removeClick(){
+    this.orderMenu.removeMenuItem(this.tempDelIndex);
+    this.isPOPUP=false;
+    this.getOrderedMenu();
+  }
+
   orderListClicked(order,index){
     this.isDeleted=true;
     this.isPOPUP=true;
@@ -201,6 +212,18 @@ export class TablePage {
     this.tempItemPrice=order.itemPrice;
     this.tempItemQuant=order.quant;
     this.tempDelIndex=index;
+  }
+
+  placeOrder(){
+    
+    this.tempConfirmOrder=this.orderMenu.getOrderedMenu();
+
+    console.log("Confirm Data :",this.tempConfirmOrder);
+    this.isConfirm=true;
+  }
+
+  confirmClicked(){
+    console.log("Corfirm Order Clicked");
   }
 
 }
