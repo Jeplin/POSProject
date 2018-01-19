@@ -35,17 +35,8 @@ export class OrdermenuProvider {
   }
 
   removeMenuItem(index){
-
+    console.log("Remeved Clicked",index);
+    this.orderMenu.splice(index,1);
   }
-
-  increaseQuant(quant){
-
-  }
-
-  decreaseQuant(quant){
-
-  }
-
-
 
 }

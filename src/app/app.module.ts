@@ -23,6 +23,7 @@ import { TablePage } from '../pages/table/table';
 import { ChartsModule } from 'ng2-charts';
 import { TableDetailsProvider } from '../providers/table-details/table-details';
 import { OrdermenuProvider } from '../providers/ordermenu/ordermenu';
+//import { ProfiletabPage } from '../pages/profiletab/profiletab';
 //import {RoundProgressModule} from 'angular-svg-round-progressbar';
 
 // use this -- npm install web-animations-js @angular/animations@4.0.0 --save
