@@ -28,6 +28,8 @@ import { OrdermenuProvider } from '../providers/ordermenu/ordermenu';
 
 // use this -- npm install web-animations-js @angular/animations@4.0.0 --save
 
+import { Network } from '@ionic-native/network';
+import { OrdermenuCardPage } from '../pages/ordermenu-card/ordermenu-card';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { OrdermenuProvider } from '../providers/ordermenu/ordermenu';
     Home2Page,
     TablePage,
     MenucardPage,
+    OrdermenuCardPage,
     ProfilePage,
     AttendencePage,
   ],
@@ -56,12 +59,14 @@ import { OrdermenuProvider } from '../providers/ordermenu/ordermenu';
     Home2Page,
     TablePage,
     MenucardPage,
+    OrdermenuCardPage,
     ProfilePage,
     AttendencePage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    Network,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApidataProvider,
     FloorCountProvider,

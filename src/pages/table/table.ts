@@ -6,6 +6,7 @@ import { Chart } from 'chart.js';
 import { TableDetailsProvider } from '../../providers/table-details/table-details';
 import { FloorCountProvider } from '../../providers/floor-count/floor-count';
 import { OrdermenuProvider } from '../../providers/ordermenu/ordermenu';
+import { OrdermenuCardPage } from '../ordermenu-card/ordermenu-card';
 
 //import { trigger, state, style, animate, transition } from '@angular/animations';
 
@@ -23,10 +24,13 @@ import { OrdermenuProvider } from '../../providers/ordermenu/ordermenu';
   
   })
 export class TablePage {
+  inputCustomer:string="";
+  orderedList: any;
   isOrdered: boolean;
   orderedmenuList: any;
   colorArr: string[];
   dataArr: number[];
+  orderStatus:string;
 
   // @ViewChild('barCanvas') barCanvas;
    @ViewChild('doughnutCanvas') doughnutCanvas;
@@ -51,6 +55,8 @@ export class TablePage {
   isPOPUP:boolean = false;
   isDeleted:boolean=false;
   isConfirm:boolean=false;
+  isWithName:boolean=false;
+  isNameDisplay:boolean=false;
 
   // temp storage variable
   tempItemName:string;
@@ -60,10 +66,14 @@ export class TablePage {
 
   tempConfirmOrder:any;
 
+  customerName:string;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,private menuData:ApidataProvider,private tableDetail:TableDetailsProvider,private floorDetail:FloorCountProvider,private orderMenu:OrdermenuProvider) {
     this.getMenuData();
 
+    this.orderMenu.resetAllData();
     // this.displayChart();
+ 
 
   }
 
@@ -78,13 +88,40 @@ export class TablePage {
     this.floorNo=this.floorDetail.getFloorCount();
 
     this.tableNo=this.floorDetail.getTableCount();
+    this.tableNo=this.tableNo+1;
 
     this.tableData=this.tableDetail.getTableDetails();
 
-    //console.log("Table Data : ",this.tableData["table_capacity"]);
-    //let capCity=this.tableData["table_capacity"];
-    //this.prepareChartData(capCity);
+    console.log("Table Data : ",this.tableData);
+    let capCity=this.tableData["table_capacity"];
+    this.checkIfBooked(this.tableData);
+    this.prepareChartData(capCity);
   }
+
+  checkIfBooked(tableInfo){
+    console.log("Check ");
+    if(tableInfo["table_status"]==3){
+      console.log("Check inside");
+      let data={floorNo:this.floorNo,tableNo:this.tableNo};
+
+      let jsonData=JSON.stringify(data);
+
+      this.menuData.getOrderedData(data).subscribe(data=>{
+        console.log("On Success",data);
+
+        this.customerName=data[0]["customerName"];
+        this.isNameDisplay=true;
+        this.orderStatus=data[0]["orderStatus"];
+        console.log("cust:",this.customerName);
+        this.orderedList=data[0]["orders"];
+        console.log("ordss :",this.orderedList);
+
+      },error=>{
+        console.log("Server Error to get check");
+      });
+    }
+  }
+
   prepareChartData(capCity){
     if(capCity>1){
       let totCap=capCity*2;
@@ -117,17 +154,17 @@ export class TablePage {
   }
 
   getMenuData(){
-    // this.menuData.getMenuData().subscribe(data =>{
-    //   console.log("Menu List : "+data);
-    //   this.menuList=data;
-    // });
+    this.menuData.getMenuData().subscribe(data =>{
+      console.log("Menu List : "+data);
+      this.menuList=data;
+    });
 
-    this.menuList=[{item_name:"Item1 sds",item_price:20},
-                  {item_name:"Item2",item_price:50},
-                  {item_name:"Item3",item_price:40},
-                  {item_name:"Item4",item_price:30},
-                  {item_name:"Item5",item_price:70}
-                ];
+    // this.menuList=[{item_name:"Item1 sds",item_price:20},
+    //               {item_name:"Item2",item_price:50},
+    //               {item_name:"Item3",item_price:40},
+    //               {item_name:"Item4",item_price:30},
+    //               {item_name:"Item5",item_price:70}
+    //             ];
   }
 
   displayChart(){ 
@@ -215,15 +252,85 @@ export class TablePage {
   }
 
   placeOrder(){
+
+    if(this.customerName==null || this.customerName==""){
+      console.log("No name");
+      this.isWithName=true;
+      this.isConfirm=false;
+    }
+    else{
+      console.log("Name Available");
+      this.isWithName=false;
+      this.isConfirm=true;
+    }
     
     this.tempConfirmOrder=this.orderMenu.getOrderedMenu();
 
-    console.log("Confirm Data :",this.tempConfirmOrder);
-    this.isConfirm=true;
+    console.log("Confirm Data :",this.customerName);
+    
   }
 
   confirmClicked(){
-    console.log("Corfirm Order Clicked");
+
+    //this.customerName="Jeplin";
+
+    let table_ID=this.tableData["id"];
+    let orders=this.orderMenu.getOrderedMenu();
+    console.log(orders);
+    let data={floorNo:this.floorNo,tableNo:this.tableNo,tableId:table_ID,customerName:this.customerName,order:orders};
+
+    this.menuData.postOrderedMenu(data).subscribe(data=>{
+      console.log("On Success");
+
+      this.refreshAll();
+      this.getOrderedMenu();
+      this.isConfirm=false;
+
+    },error=>{
+      console.log("Server Error");
+    });
+
+    
+
   }
+
+  customerNameSubmit(){
+    console.log("Input ---",this.inputCustomer);
+
+    this.customerName=this.inputCustomer;
+    this.isConfirm=true;
+    this.isWithName=false;
+
+  }
+
+
+  refreshAll(){
+    this.isOrdered=false;
+
+    this.orderMenu.resetAllData();
+
+      let data={floorNo:this.floorNo,tableNo:this.tableNo};
+
+      let jsonData=JSON.stringify(data);
+
+      this.menuData.getOrderedData(data).subscribe(data=>{
+        console.log("On Success",data);
+
+        this.customerName=data[0]["customerName"];
+        this.orderStatus=data[0]["orderStatus"];
+        this.isNameDisplay=true;
+        
+        console.log("cust:",this.customerName);
+        this.orderedList=data[0]["orders"];
+        console.log("ordss :",this.orderedList);
+
+      },error=>{
+        console.log("Server Error to get check");
+      });
+    }
+  
+    openmenu(){
+      this.navCtrl.push(OrdermenuCardPage);
+    }
 
 }

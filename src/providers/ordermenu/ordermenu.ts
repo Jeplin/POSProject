@@ -39,4 +39,8 @@ export class OrdermenuProvider {
     this.orderMenu.splice(index,1);
   }
 
+  resetAllData(){
+    this.orderMenu=[];
+  }
+
 }

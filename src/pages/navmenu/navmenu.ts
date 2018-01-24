@@ -25,7 +25,7 @@ import { TablePage } from '../table/table';
 export class NavmenuPage {
   @ViewChild(Nav) nav: Nav;
   
-    rootPage: any = TablePage;
+    rootPage: any = Home1Page;
   
     pages: Array<{title: string, component: any}>;
 

@@ -13,8 +13,9 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class ApidataProvider {
 
-  // apiURL:string="https://jsonplaceholder.typicode.com/users";
-  apiURL:string="http://10.0.2.2:80/POSProjects/";
+  
+  //apiURL:string="http://10.0.2.2:80/POSProjects/";
+  apiURL:string="http://localhost:80/POSProjects/";
 
   constructor(public http: HttpClient) {
     console.log('Hello ApidataProvider Provider');
@@ -32,6 +33,21 @@ export class ApidataProvider {
     return this.http.get(this.apiURL+"getUserData.php").do(res=>console.log(res));
   }
 
+  postOrderedMenu(data){
+    return this.http.post(this.apiURL+"addTableOrders.php",data,{
+      headers : {
+          'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+      }
+  }).do(res=>console.log(res));
+  }
+
+  getOrderedData(data){
+    return this.http.post(this.apiURL+"getOrderedData.php",data,{
+      headers : {
+          'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+      }
+  }).do(res=>console.log(res));
+  }
 
 
 }

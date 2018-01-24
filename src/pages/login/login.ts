@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams ,AlertController } from 'ionic-angular';
 import { NavmenuPage } from '../navmenu/navmenu';
 import { FloorCountProvider } from '../../providers/floor-count/floor-count';
+
+import { Network } from '@ionic-native/network';
 
 /**
  * Generated class for the LoginPage page.
@@ -20,12 +22,22 @@ export class LoginPage {
   showPasswordFlag:boolean;
   isShowPassword:boolean=true;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private floorCount:FloorCountProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private floorCount:FloorCountProvider,private network: Network,private alertCtrl:AlertController) {
     this.mainDisplayMethod();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+
+    this.network.onConnect().subscribe(data => {
+      console.log("Connected",data)
+    }, error => console.error("ConErr",error));
+   
+    this.network.onDisconnect().subscribe(data => {
+      console.log("No Connect",data)
+      this.showAlert();
+    }, error => console.error(error));
+
   }
 
   mainDisplayMethod(){
@@ -47,6 +59,15 @@ export class LoginPage {
   loginMethod(){
     this.floorCount.setFloorCount(1);
     this.navCtrl.setRoot(NavmenuPage);
+  }
+
+  showAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Connection Error!',
+      subTitle: 'No internet connection available',
+      buttons: ['OK']
+    });
+    alert.present();
   }
 
 }

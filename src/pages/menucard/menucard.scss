@@ -73,4 +73,24 @@ page-menucard {
         text-align: center;
         
     }
+
+    //Gallery 
+    .menuItem{
+        background-size: cover;
+        min-height: 160px;
+        text-align: center;
+    }
+    .menuItemTxt{
+        background: rgba(26, 5, 12, 0.8);
+        position: absolute;
+        bottom: 5px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        width: 94%;
+        height: 40%;
+        margin: auto;
+        color: white;
+        font-weight: bold;
+    }
 }

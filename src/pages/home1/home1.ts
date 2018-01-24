@@ -37,6 +37,11 @@ export class Home1Page {
     //this.getLayoutData();
   }
 
+  ionViewWillEnter(){
+    console.log("Will Enter");
+    this.getLayoutData();
+  }
+
   displayFloorUI(){
     this.floorNo=this.floor.getFloorCount();
     console.log("FloorNo :" ,this.floorNo);
@@ -68,13 +73,14 @@ export class Home1Page {
   }
 
   tableClicked(tableData,tableNo){
-    console.log("Table Clicked Data :",tableData["id"]);
+    console.log("Table Clicked Data :",tableData);
 
     this.tableDetail.setTableDetails(tableData);
     tableNo=tableNo;
     this.floor.setTableCount(tableNo);
 
     this.navCtrl.push(TablePage);
+  
   }
 
   goPrevious(){
