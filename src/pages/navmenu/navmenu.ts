@@ -7,6 +7,7 @@ import { AttendencePage } from '../attendence/attendence';
 import { Home1Page } from '../home1/home1';
 import { LoginPage } from '../login/login';
 import { TablePage } from '../table/table';
+import { OrdermenuCardPage } from '../ordermenu-card/ordermenu-card';
 //import { ProfiletabPage } from '../profiletab/profiletab';
 
 
