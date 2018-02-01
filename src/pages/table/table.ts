@@ -7,6 +7,8 @@ import { TableDetailsProvider } from '../../providers/table-details/table-detail
 import { FloorCountProvider } from '../../providers/floor-count/floor-count';
 import { OrdermenuProvider } from '../../providers/ordermenu/ordermenu';
 import { OrdermenuCardPage } from '../ordermenu-card/ordermenu-card';
+import { BillPage } from '../bill/bill';
+import { InvoicePage } from '../invoice/invoice';
 
 //import { trigger, state, style, animate, transition } from '@angular/animations';
 
@@ -24,6 +26,7 @@ import { OrdermenuCardPage } from '../ordermenu-card/ordermenu-card';
   
   })
 export class TablePage {
+  allOrderedData: Object;
   inputCustomer:string="";
   orderedList: any;
   isOrdered: boolean;
@@ -38,13 +41,6 @@ export class TablePage {
 
   // barChart: any;
    doughnutChart: any;
-  // lineChart: any;
-
-  //public doughnutChartLabels:string[] = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
-  // public doughnutChartData:number[] = [35, 45, 100,56];
-  // public backgroundColors:Array<any> = [{backgroundColor:'blue'},{backgroundColor:'yellow'},{backgroundColor:'green'},{backgroundColor:'orange'}];
-  // public doughnutChartType:string = 'doughnut';
-
   
   menuList:any;
   tableData:any;
@@ -57,6 +53,7 @@ export class TablePage {
   isConfirm:boolean=false;
   isWithName:boolean=false;
   isNameDisplay:boolean=false;
+  isBill:boolean=false;
 
   // temp storage variable
   tempItemName:string;
@@ -81,6 +78,11 @@ export class TablePage {
     console.log('ionViewDidLoad TablePage');
     this.getTableDetails();
     this.displayChart();
+    //this.getOrderedMenu();
+  }
+
+  ionViewWillEnter(){
+    console.log("EnterView");
     this.getOrderedMenu();
   }
 
@@ -100,6 +102,7 @@ export class TablePage {
 
   checkIfBooked(tableInfo){
     console.log("Check ");
+    this.orderedList=[];
     if(tableInfo["table_status"]==3){
       console.log("Check inside");
       let data={floorNo:this.floorNo,tableNo:this.tableNo};
@@ -109,12 +112,25 @@ export class TablePage {
       this.menuData.getOrderedData(data).subscribe(data=>{
         console.log("On Success",data);
 
+        this.allOrderedData=data;
+
         this.customerName=data[0]["customerName"];
         this.isNameDisplay=true;
         this.orderStatus=data[0]["orderStatus"];
         console.log("cust:",this.customerName);
-        this.orderedList=data[0]["orders"];
-        console.log("ordss :",this.orderedList);
+        // this.orderedList=data[0]["allorders"];
+        let tempAllOrder=data[0]["allorders"];
+
+        console.log("ordss :",tempAllOrder);
+        tempAllOrder.forEach(element => {
+          let subOrder=element["orders"];
+          subOrder.forEach(element2 => {
+            this.orderedList.push(element2);
+          });
+        });
+        console.log("cust23:",this.orderedList);
+
+        this.isBill=true;
 
       },error=>{
         console.log("Server Error to get check");
@@ -280,7 +296,7 @@ export class TablePage {
     let data={floorNo:this.floorNo,tableNo:this.tableNo,tableId:table_ID,customerName:this.customerName,order:orders};
 
     this.menuData.postOrderedMenu(data).subscribe(data=>{
-      console.log("On Success");
+      console.log("On Success -- cnfrm",data);
 
       this.refreshAll();
       this.getOrderedMenu();
@@ -289,9 +305,6 @@ export class TablePage {
     },error=>{
       console.log("Server Error");
     });
-
-    
-
   }
 
   customerNameSubmit(){
@@ -305,6 +318,7 @@ export class TablePage {
 
 
   refreshAll(){
+
     this.isOrdered=false;
 
     this.orderMenu.resetAllData();
@@ -314,11 +328,12 @@ export class TablePage {
       let jsonData=JSON.stringify(data);
 
       this.menuData.getOrderedData(data).subscribe(data=>{
-        console.log("On Success",data);
+        console.log("On Success 00",data);
 
         this.customerName=data[0]["customerName"];
         this.orderStatus=data[0]["orderStatus"];
         this.isNameDisplay=true;
+        this.isBill=true;
         
         console.log("cust:",this.customerName);
         this.orderedList=data[0]["orders"];
@@ -326,6 +341,17 @@ export class TablePage {
 
       },error=>{
         console.log("Server Error to get check");
+      });
+    }
+
+    viewBill(){
+
+      console.log("Final Bill : ",this.tableData['id']);
+      console.log("Final Bill-2 : ",this.allOrderedData);
+
+      this.navCtrl.setRoot(InvoicePage,{
+        tableId:this.tableData["id"],
+        orderBill:this.allOrderedData
       });
     }
   

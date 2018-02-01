@@ -1,0 +1,51 @@
+<!--
+  Generated template for the BillPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar color="header">
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>View Bill</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+
+<ion-content>
+
+  <div id="mainOuterDiv">
+    <div id="midLayer">
+      <div id="mainDiv">
+        <div style="padding:10px;background:white;">
+          <table>
+            <tr class="billSeparator">
+              <td colspan="4" ><ion-label class="headerTitle">Bill Receipt</ion-label></td>
+            </tr>
+            <tr>
+                <td>Name :</td><td colspan="3">{{custName}}
+              </tr>
+            <tr class="billSeparator">
+              <td>Date:</td><td colspan="3">{{orderedDate}}</td>
+            </tr>
+            <tr class="billSeparator">
+              <td>SNo.</td><td>Item Name</td><td>QTY.</td><td>Price</td>
+            </tr>
+            <tr *ngFor="let order of billOrdered;let i=index;">
+                <td>{{i+1}}</td><td>{{order.item}}</td><td>{{order.quant}}</td><td>{{order.tot_price}}</td>
+            </tr>
+            <tr class="upperSeparator">
+              <td colspan="3">Total</td><td>&#8377; {{totPrice}} /-</td>
+            </tr>
+          </table>
+          <div>
+            <button ion-button block (click)="doneClicked()">DONE</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

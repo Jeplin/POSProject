@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApidataProvider } from '../../providers/apidata/apidata';
+import { OrdermenuProvider } from '../../providers/ordermenu/ordermenu';
 
 /**
  * Generated class for the OrdermenuCardPage page.
@@ -19,28 +20,28 @@ export class OrdermenuCardPage {
   menuList:any;
   checkBoxArray:any;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams,private menuData:ApidataProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private menuData:ApidataProvider,private orderMenu:OrdermenuProvider) {
     this.checkBoxArray=[];
 
-    this.menuList=[
-      {item_name:"Name1",item_price:"Price1"},
-      {item_name:"Name2",item_price:"Price2"},
-      {item_name:"Name3",item_price:"Price3"},
-      {item_name:"Name4",item_price:"Price4"},
-      {item_name:"Name5",item_price:"Price5"},
-      {item_name:"Name6",item_price:"Price6"},
-      {item_name:"Name7",item_price:"Price7"},
-      {item_name:"Name8",item_price:"Price8"},
-      {item_name:"Name9",item_price:"Price9"},
-      {item_name:"Name10",item_price:"Price10"},
-      {item_name:"Name11",item_price:"Price11"},
-      {item_name:"Name12",item_price:"Price12"},
-    ];
+    // this.menuList=[
+    //   {item_name:"Name1",item_price:"Price1"},
+    //   {item_name:"Name2",item_price:"Price2"},
+    //   {item_name:"Name3",item_price:"Price3"},
+    //   {item_name:"Name4",item_price:"Price4"},
+    //   {item_name:"Name5",item_price:"Price5"},
+    //   {item_name:"Name6",item_price:"Price6"},
+    //   {item_name:"Name7",item_price:"Price7"},
+    //   {item_name:"Name8",item_price:"Price8"},
+    //   {item_name:"Name9",item_price:"Price9"},
+    //   {item_name:"Name10",item_price:"Price10"},
+    //   {item_name:"Name11",item_price:"Price11"},
+    //   {item_name:"Name12",item_price:"Price12"},
+    // ];
 
-    this.menuList.forEach(element => {
-      this.checkBoxArray.push(false);
-    });
-    //this.getMenuData();
+    // this.menuList.forEach(element => {
+    //   this.checkBoxArray.push(false);
+    // });
+    this.getMenuData();
   }
 
   ionViewDidLoad() {
@@ -54,6 +55,11 @@ export class OrdermenuCardPage {
     this.menuData.getMenuData().subscribe(data =>{
       console.log("Menu List : "+data);
       this.menuList=data;
+
+      this.menuList.forEach(element => {
+        this.checkBoxArray.push(false);
+      });
+
     });
   }
 
@@ -78,14 +84,16 @@ export class OrdermenuCardPage {
   }
 
   doneClicked(){
-    let allCheckedData=[];
+    //let allCheckedData=[];
     for(let i=0;i<this.checkBoxArray.length;i++){
       if(this.checkBoxArray[i]){
-        allCheckedData.push(this.menuList[i]);
+        //allCheckedData.push(this.menuList[i]);
+        this.orderMenu.addOrderMenu(this.menuList[i].item_name,this.menuList[i].item_price,1);
       }
     }
-
-    console.log("Alll Set -- ",allCheckedData);
+    
+    this.navCtrl.pop();
+    //console.log("Alll Set -- ",allCheckedData);
   }
 
 }

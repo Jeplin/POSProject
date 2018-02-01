@@ -56,7 +56,7 @@
       </div>
       <div class="containerBody">
         <div class="custNameDisp" *ngIf="isNameDisplay">
-          <ion-label>Booked BY : {{customerName}}</ion-label>
+          <ion-label>Customer : {{customerName}}</ion-label>
         </div>
         <div class="pieChart">              
               <div class="pieDiv">     
@@ -77,7 +77,7 @@
               <td>ORDER ITEMS</td><td>QUANT</td><td>PRICES</td>
             </tr>
             <tr *ngFor="let order of orderedList;let i=index;" class="bodyDiv">
-              <td>{{order.item}}</td><td>{{order.quant}} </td><td>{{order.tot_price}}</td>
+              <td>{{order.item}}</td><td>{{order.quant}} </td><td>{{order.tot_price}}</td>              
             </tr>
             <tr *ngFor="let order of orderedmenuList;let i=index;" class="bodyDiv" (click)="orderListClicked(order,i)">
               <td>{{order.itemName}}</td><td><button>-</button> {{order.quant}} <button>+</button></td><td>{{order.itemPrice}}</td>
@@ -89,6 +89,10 @@
               <td colspan=3 *ngIf="isOrdered" style="padding:15px;">
                 <button ion-button block color="button" (click)="placeOrder()">Place Order</button></td>
             </tr>
+            <tr>
+                <td colspan=3 *ngIf="isBill" style="padding:15px;">
+                  <button ion-button block color="button" (click)="viewBill()">View Bill</button></td>
+              </tr>
           </table>
         </div>
       </div>

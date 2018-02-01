@@ -22,10 +22,10 @@
         <div class="container">
           <table>
             <tr class="headerTD">
-              <td>Date</td><td>In-Time</td><td>Out-Time</td><td>Total</td>
+              <td>SNo</td><td>In-Time</td><td>Out-Time</td><td>Total</td>
             </tr>
             <tr class="bodyDiv" *ngFor="let attendence of attendenceData;let i=index;">
-              <td>{{attendence.date}}</td><td>{{attendence.in_time}}</td><td>{{attendence.out_time}}</td><td>Total</td>
+              <td>{{i+1}}</td><td>{{attendence.in_time}}</td><td>{{attendence.out_time}}</td><td>{{totTime[i]}}</td>
             </tr>
 
           </table>

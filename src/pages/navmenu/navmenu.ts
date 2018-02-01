@@ -8,6 +8,7 @@ import { Home1Page } from '../home1/home1';
 import { LoginPage } from '../login/login';
 import { TablePage } from '../table/table';
 import { OrdermenuCardPage } from '../ordermenu-card/ordermenu-card';
+import { MembershipPage } from '../membership/membership';
 //import { ProfiletabPage } from '../profiletab/profiletab';
 
 
@@ -35,9 +36,8 @@ export class NavmenuPage {
     this.pages = [
       { title: 'Tables', component: Home1Page },
       { title: 'Menu Card', component: MenucardPage },
-      { title: 'Profile' , component:ProfilePage},
-      { title: 'Attendence' , component:AttendencePage}
-
+      { title: 'Attendence' , component:AttendencePage },
+      { title: 'MemberShip' , component:MembershipPage }
     ];
 
   }

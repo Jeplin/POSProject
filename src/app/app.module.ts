@@ -30,6 +30,13 @@ import { OrdermenuProvider } from '../providers/ordermenu/ordermenu';
 
 import { Network } from '@ionic-native/network';
 import { OrdermenuCardPage } from '../pages/ordermenu-card/ordermenu-card';
+import { MembershipPage } from '../pages/membership/membership';
+import { BillPage } from '../pages/bill/bill';
+
+import { File } from '@ionic-native/file';
+import { FileOpener } from '@ionic-native/file-opener';
+import { InvoicePage } from '../pages/invoice/invoice';
+
 
 @NgModule({
   declarations: [
@@ -43,6 +50,9 @@ import { OrdermenuCardPage } from '../pages/ordermenu-card/ordermenu-card';
     OrdermenuCardPage,
     ProfilePage,
     AttendencePage,
+    MembershipPage,
+    BillPage,
+    InvoicePage
   ],
   imports: [
     BrowserModule,
@@ -62,6 +72,9 @@ import { OrdermenuCardPage } from '../pages/ordermenu-card/ordermenu-card';
     OrdermenuCardPage,
     ProfilePage,
     AttendencePage,
+    MembershipPage,
+    BillPage,
+    InvoicePage
   ],
   providers: [
     StatusBar,
@@ -72,6 +85,8 @@ import { OrdermenuCardPage } from '../pages/ordermenu-card/ordermenu-card';
     FloorCountProvider,
     TableDetailsProvider,
     OrdermenuProvider,
+    File,
+    FileOpener
   ]
 })
 export class AppModule {}

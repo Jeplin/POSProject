@@ -38,7 +38,7 @@ export class ApidataProvider {
       headers : {
           'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
       }
-  }).do(res=>console.log(res));
+    }).do(res=>console.log(res));
   }
 
   getOrderedData(data){
@@ -46,7 +46,15 @@ export class ApidataProvider {
       headers : {
           'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
       }
-  }).do(res=>console.log(res));
+    }).do(res=>console.log(res));
+  }
+
+  updateTableStatus(data){
+    return this.http.post(this.apiURL+"updateTableStatus.php",data,{
+      headers : {
+        'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
+    }).do(res=>console.log(res));
   }
 
 
