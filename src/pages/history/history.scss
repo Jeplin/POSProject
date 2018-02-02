@@ -1,0 +1,36 @@
+page-history {
+    .contentDiv{
+        margin-top: 1px;
+        padding: 0;
+    }
+    .listDiv{
+        width: 100%;
+        border:1px solid #d3d3d3;
+    }
+    .listDiv table{
+        width: 100%;
+    }
+    .listDiv table th{
+        padding: 4px;
+        font-size: 100%;
+        border-left:1px solid #d3d3d3;
+        border-right: 1px solid #d3d3d3;
+        border-bottom: 2px solid #d3d3d3;
+    }
+    .listDiv table td{
+        text-align: center;
+        font-weight: normal;
+        font-size: 100%;
+        padding: 4px;
+
+    }
+    ion-list{
+        padding: 0;
+        margin: 0;
+    }
+    ion-item{
+        margin: 0;
+        padding: 0;
+        margin: 0 -10px;
+    }
+}

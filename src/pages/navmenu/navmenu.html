@@ -8,11 +8,7 @@
   <ion-header color="header">
     <ion-toolbar color="header">
       <ion-title>Menu</ion-title>
-      <ion-buttons end>
-        <button ion-button icon-only menuClose>
-          <ion-icon name="close-circle"></ion-icon>
-        </button>
-      </ion-buttons>
+      
     </ion-toolbar>
   </ion-header>
 
@@ -27,13 +23,13 @@
     </div>
     <div class="navOptionS">
       <ion-list no-lines default-none>
-        <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-          {{p.title}}
+        <button menuClose ion-item detail-none *ngFor="let p of pages" (click)="openPage(p)">
+          <ion-icon [name]="p.icon" item-left></ion-icon>{{p.title}}
         </button>
       </ion-list>
     </div>
     <div class="logoutDiv">
-        <button ion-item full menuClose default-none no-lines (click)="logoutMethod()">Logout</button>
+        <button ion-item detail-none full menuClose no-lines (click)="logoutMethod()"><ion-icon name="md-exit" item-left></ion-icon>Logout</button>
     </div>
   </ion-content>
 

@@ -9,6 +9,7 @@ import { LoginPage } from '../login/login';
 import { TablePage } from '../table/table';
 import { OrdermenuCardPage } from '../ordermenu-card/ordermenu-card';
 import { MembershipPage } from '../membership/membership';
+import { HistoryPage } from '../history/history';
 //import { ProfiletabPage } from '../profiletab/profiletab';
 
 
@@ -29,15 +30,16 @@ export class NavmenuPage {
   
     rootPage: any = Home1Page;
   
-    pages: Array<{title: string, component: any}>;
+    pages: Array<{title: string, component: any, icon:any}>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
 
     this.pages = [
-      { title: 'Tables', component: Home1Page },
-      { title: 'Menu Card', component: MenucardPage },
-      { title: 'Attendence' , component:AttendencePage },
-      { title: 'MemberShip' , component:MembershipPage }
+      { title: 'Tables', component: Home1Page , icon:"help-buoy" },
+      { title: 'Menu Card', component: MenucardPage ,icon:"paper" },
+      { title: 'Attendence' , component:AttendencePage ,icon:"list-box" },
+      { title: 'History' , component:HistoryPage ,icon:"stats" },
+      { title: 'MemberShip' , component:MembershipPage ,icon:"people" }
     ];
 
   }

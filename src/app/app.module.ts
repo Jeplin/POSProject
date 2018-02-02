@@ -36,6 +36,7 @@ import { BillPage } from '../pages/bill/bill';
 import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener';
 import { InvoicePage } from '../pages/invoice/invoice';
+import { HistoryPage } from '../pages/history/history';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { InvoicePage } from '../pages/invoice/invoice';
     AttendencePage,
     MembershipPage,
     BillPage,
-    InvoicePage
+    InvoicePage,
+    HistoryPage
   ],
   imports: [
     BrowserModule,
@@ -74,7 +76,8 @@ import { InvoicePage } from '../pages/invoice/invoice';
     AttendencePage,
     MembershipPage,
     BillPage,
-    InvoicePage
+    InvoicePage,
+    HistoryPage
   ],
   providers: [
     StatusBar,

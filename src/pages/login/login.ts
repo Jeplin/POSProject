@@ -4,6 +4,7 @@ import { NavmenuPage } from '../navmenu/navmenu';
 import { FloorCountProvider } from '../../providers/floor-count/floor-count';
 
 import { Network } from '@ionic-native/network';
+import { HistoryPage } from '../history/history';
 
 /**
  * Generated class for the LoginPage page.
@@ -59,6 +60,7 @@ export class LoginPage {
   loginMethod(){
     this.floorCount.setFloorCount(1);
     this.navCtrl.setRoot(NavmenuPage);
+    //this.navCtrl.setRoot(HistoryPage);
   }
 
   showAlert() {
