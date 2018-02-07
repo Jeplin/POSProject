@@ -38,6 +38,8 @@ import { FileOpener } from '@ionic-native/file-opener';
 import { InvoicePage } from '../pages/invoice/invoice';
 import { HistoryPage } from '../pages/history/history';
 
+import * as moment from 'moment';
+
 
 @NgModule({
   declarations: [

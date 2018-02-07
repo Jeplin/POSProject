@@ -28,86 +28,86 @@
 </ion-segment>
 
 <div [ngSwitch]="order" class="contentDiv">
-    <ion-list *ngSwitchCase="'today'" no-lines>
-      <ion-item>
-        <div class="listDiv">
-          <table>
-            <tr>
-              <th>Date</th>
-              <th>Customer</th>
-              <th>Floor/Table</th>
-              <th>Bill</th>
-            </tr>
-            <tr>
-              <td>today</td>
-              <td>JD</td>
-              <td>1/5</td>
-              <td>&#8377; 2000 /-</td>
-            </tr>
-            <tr>
-              <td>today</td>
-              <td>JD</td>
-              <td>1/5</td>
-              <td>&#8377; 2000 /-</td>
-            </tr>
-          </table>
-        </div>
-      </ion-item>
-    </ion-list>
+  <ion-list *ngSwitchCase="'today'" no-lines>
+    <ion-item>
+      <div class="listDiv">
+        <table>
+          <tr>
+            <th>Date</th>
+            <th>C</th>
+            <th>T/F</th>
+            <th>B</th>
+          </tr>
+          <tr *ngFor="let order of dailyArray">
+            <td>today</td>
+            <td>JD</td>
+            <td>1/5</td>
+            <td>&#8377; 2000 /-</td>
+          </tr>
+          <tr>
+            <td>today</td>
+            <td>JD</td>
+            <td>1/5</td>
+            <td>&#8377; 2000 /-</td>
+          </tr>
+        </table>
+      </div>
+    </ion-item>
+  </ion-list>
 
-    <ion-list *ngSwitchCase="'week'">
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-kitten-1.jpg">
-        </ion-thumbnail>
-        <h2>Luna</h2>
-      </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-kitten-3.jpg">
-        </ion-thumbnail>
-        <h2>Milo</h2>
-      </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-kitten-4.jpg">
-        </ion-thumbnail>
-        <h2>Bandit</h2>
-      </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-kitten-2.jpg">
-        </ion-thumbnail>
-        <h2>Nala</h2>
-      </ion-item>
-    </ion-list>
+  <ion-list *ngSwitchCase="'week'">
+    <ion-item>
+      <div class="listDiv">
+        <table>
+          <tr>
+            <th>Date</th>
+            <th>C</th>
+            <th>T/F</th>
+            <th>B</th>
+          </tr>
+          <tr *ngFor="let order of weeklyArray">
+            <td>Week</td>
+            <td>JD</td>
+            <td>1/5</td>
+            <td>&#8377; 2000 /-</td>
+          </tr>
+          <tr>
+            <td>Week</td>
+            <td>JD</td>
+            <td>1/5</td>
+            <td>&#8377; 2000 /-</td>
+          </tr>
+        </table>
+      </div>
+    </ion-item>
+  </ion-list>
 
-    <ion-list *ngSwitchCase="'month'">
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-duckling-1.jpg">
-        </ion-thumbnail>
-        <h2>Daffy</h2>
-      </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-duckling-2.jpg">
-        </ion-thumbnail>
-        <h2>Huey</h2>
-      </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-duckling-3.jpg">
-        </ion-thumbnail>
-        <h2>Dewey</h2>
-      </ion-item>
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-duckling-4.jpg">
-        </ion-thumbnail>
-        <h2>Louie</h2>
-      </ion-item>
-    </ion-list>
+  <ion-list *ngSwitchCase="'month'">
+    <ion-item>
+      <div class="listDiv">
+        <table>
+          <tr>
+            <th>Date</th>
+            <th>C</th>
+            <th>T/F</th>
+            <th>B</th>
+          </tr>
+          <tr *ngFor="let order of monthlyArray">
+            <td>Month</td>
+            <td>JD</td>
+            <td>1/5</td>
+            <td>&#8377; 2000 /-</td>
+          </tr>
+          <tr>
+            <td>Month</td>
+            <td>JD</td>
+            <td>1/5</td>
+            <td>&#8377; 2000 /-</td>
+          </tr>
+        </table>
+      </div>
+    </ion-item>
+  </ion-list>
 </div>
 
 </ion-content>
