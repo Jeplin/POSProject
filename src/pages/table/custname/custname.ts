@@ -42,7 +42,7 @@ export class CustnamePage {
   }
 
   cancelDismiss(){
-    this.viewCtrl.dismiss('');
+    this.viewCtrl.dismiss("");
   }
 
 }

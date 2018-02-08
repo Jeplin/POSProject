@@ -283,18 +283,26 @@ export class TablePage {
 
     if(this.customerName==null || this.customerName==""){
       console.log("No name");
-      this.isWithName=true;
-      this.isConfirm=false;
+      // this.isWithName=true;
+      // this.isConfirm=false;
 
       let modalConfirm=this.modalCtrl.create(CustnamePage,null,{cssClass:'inset-modal'});
       modalConfirm.onDidDismiss(data=>{
         console.log("Customer Name :",data);
+        if(data !=''){
+          this.customerName=data;
+          let modalConfirm=this.modalCtrl.create(ConfirmPage,{myParam:'Jeplin'},{cssClass:'inset-modal'});
+          modalConfirm.onDidDismiss(data=>{
+            console.log(data);
+          });
+          modalConfirm.present();
+        }
       });
       modalConfirm.present();
     }
     else{
       console.log("Name Available");
-      let modalConfirm=this.modalCtrl.create(EditPage,{myParam:'Jeplin'},{cssClass:'inset-modal'});
+      let modalConfirm=this.modalCtrl.create(ConfirmPage,{myParam:'Jeplin'},{cssClass:'inset-modal'});
       modalConfirm.onDidDismiss(data=>{
         console.log(data);
       });
