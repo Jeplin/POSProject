@@ -9,6 +9,10 @@ import { OrdermenuProvider } from '../../providers/ordermenu/ordermenu';
 import { OrdermenuCardPage } from '../ordermenu-card/ordermenu-card';
 import { BillPage } from '../bill/bill';
 import { InvoicePage } from '../invoice/invoice';
+import { ModalController } from 'ionic-angular/components/modal/modal-controller';
+import { ConfirmPage } from './confirm/confirm';
+import { EditPage } from './edit/edit';
+import { CustnamePage } from './custname/custname';
 
 //import { trigger, state, style, animate, transition } from '@angular/animations';
 
@@ -65,7 +69,7 @@ export class TablePage {
 
   customerName:string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private menuData:ApidataProvider,private tableDetail:TableDetailsProvider,private floorDetail:FloorCountProvider,private orderMenu:OrdermenuProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private menuData:ApidataProvider,private tableDetail:TableDetailsProvider,private floorDetail:FloorCountProvider,private orderMenu:OrdermenuProvider,private modalCtrl:ModalController) {
     this.getMenuData();
 
     this.orderMenu.resetAllData();
@@ -259,6 +263,14 @@ export class TablePage {
   }
 
   orderListClicked(order,index){
+    console.log("Order Edit Clicked")
+
+    let modalConfirm=this.modalCtrl.create(EditPage,{myParam:'Jeplin'},{cssClass:'inset-modal'});
+    modalConfirm.onDidDismiss(data=>{
+      console.log(data);
+    });
+    modalConfirm.present();
+
     this.isDeleted=true;
     this.isPOPUP=true;
     this.tempItemName=order.itemName;
@@ -273,9 +285,21 @@ export class TablePage {
       console.log("No name");
       this.isWithName=true;
       this.isConfirm=false;
+
+      let modalConfirm=this.modalCtrl.create(CustnamePage,null,{cssClass:'inset-modal'});
+      modalConfirm.onDidDismiss(data=>{
+        console.log("Customer Name :",data);
+      });
+      modalConfirm.present();
     }
     else{
       console.log("Name Available");
+      let modalConfirm=this.modalCtrl.create(EditPage,{myParam:'Jeplin'},{cssClass:'inset-modal'});
+      modalConfirm.onDidDismiss(data=>{
+        console.log(data);
+      });
+      modalConfirm.present();
+
       this.isWithName=false;
       this.isConfirm=true;
     }

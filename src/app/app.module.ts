@@ -39,6 +39,9 @@ import { InvoicePage } from '../pages/invoice/invoice';
 import { HistoryPage } from '../pages/history/history';
 
 import * as moment from 'moment';
+import { EditPage } from '../pages/table/edit/edit';
+import { ConfirmPage } from '../pages/table/confirm/confirm';
+import { CustnamePage } from '../pages/table/custname/custname';
 
 
 @NgModule({
@@ -56,7 +59,10 @@ import * as moment from 'moment';
     MembershipPage,
     BillPage,
     InvoicePage,
-    HistoryPage
+    HistoryPage,
+    EditPage,
+    ConfirmPage,
+    CustnamePage,
   ],
   imports: [
     BrowserModule,
@@ -79,7 +85,10 @@ import * as moment from 'moment';
     MembershipPage,
     BillPage,
     InvoicePage,
-    HistoryPage
+    HistoryPage,
+    EditPage,
+    ConfirmPage,
+    CustnamePage,
   ],
   providers: [
     StatusBar,
