@@ -30,6 +30,11 @@ import { CustnamePage } from './custname/custname';
   
   })
 export class TablePage {
+  
+
+  // @ViewChild('barCanvas') barCanvas;
+   @ViewChild('doughnutCanvas') doughnutCanvas;
+  // @ViewChild('lineCanvas') lineCanvas;
   allOrderedData: Object;
   inputCustomer:string="";
   orderedList: any;
@@ -38,11 +43,6 @@ export class TablePage {
   colorArr: string[];
   dataArr: number[];
   orderStatus:string;
-
-  // @ViewChild('barCanvas') barCanvas;
-   @ViewChild('doughnutCanvas') doughnutCanvas;
-  // @ViewChild('lineCanvas') lineCanvas;
-
   // barChart: any;
    doughnutChart: any;
   
@@ -52,12 +52,12 @@ export class TablePage {
   floorNo:number;
   tableNo:number;
 
-  isPOPUP:boolean = false;
-  isDeleted:boolean=false;
-  isConfirm:boolean=false;
-  isWithName:boolean=false;
-  isNameDisplay:boolean=false;
-  isBill:boolean=false;
+  // isPOPUP:boolean = false;
+  // isDeleted:boolean=false;
+  // isConfirm:boolean=false;
+  // isWithName:boolean=false;
+  // isNameDisplay:boolean=false;
+   isBill:boolean=false;
 
   // temp storage variable
   tempItemName:string;
@@ -119,7 +119,7 @@ export class TablePage {
         this.allOrderedData=data;
 
         this.customerName=data[0]["customerName"];
-        this.isNameDisplay=true;
+        //this.isNameDisplay=true;
         this.orderStatus=data[0]["orderStatus"];
         console.log("cust:",this.customerName);
         // this.orderedList=data[0]["allorders"];
@@ -178,13 +178,6 @@ export class TablePage {
       console.log("Menu List : "+data);
       this.menuList=data;
     });
-
-    // this.menuList=[{item_name:"Item1 sds",item_price:20},
-    //               {item_name:"Item2",item_price:50},
-    //               {item_name:"Item3",item_price:40},
-    //               {item_name:"Item4",item_price:30},
-    //               {item_name:"Item5",item_price:70}
-    //             ];
   }
 
   displayChart(){ 
@@ -210,7 +203,7 @@ export class TablePage {
     this.tempItemPrice=price;
     this.tempItemQuant=1;
     //this.isPOPUP=true;
-    this.isDeleted=false;
+    //this.isDeleted=false;
     this.getOrderedMenu();
 
   }
@@ -226,60 +219,25 @@ export class TablePage {
     console.log("Ordered menu list :",this.orderedmenuList);
   }
 
-  cancelClicked(){
-    this.isPOPUP=false;
-    this.isDeleted=false;
-    this.isConfirm=false;
-  }
-
-  decreaseQuant(){
-    
-    if(this.tempItemQuant>1){
-      this.tempItemQuant=this.tempItemQuant-1;
-    }
-  }
-
-  increaseQuant(){
-    this.tempItemQuant=this.tempItemQuant+1;
-  }
-
-  okClicked(){
-    this.isPOPUP=false;
-    console.log("Name :",this.tempItemName," Price : ",this.tempItemPrice);
-    if(this.isDeleted){
-      this.orderMenu.updateOrderMenu(this.tempItemName,this.tempItemPrice,this.tempItemQuant,this.tempDelIndex);
-    }else{
-      this.orderMenu.addOrderMenu(this.tempItemName,this.tempItemPrice,this.tempItemQuant);
-    }
-    
-    this.getOrderedMenu();
-
-  }
-
-  removeClick(){
-    this.orderMenu.removeMenuItem(this.tempDelIndex);
-    this.isPOPUP=false;
-    this.getOrderedMenu();
-  }
-
   orderListClicked(order,index){
     console.log("Order Edit Clicked")
 
-    let modalConfirm=this.modalCtrl.create(EditPage,{myParam:'Jeplin'},{cssClass:'inset-modal'});
+    let data={itemName:order.itemName,itemPrice:order.itemPrice,itemQuant:order.quant,index:index};
+
+    let modalConfirm=this.modalCtrl.create(EditPage,data,{cssClass:'inset-modal'});
     modalConfirm.onDidDismiss(data=>{
       console.log(data);
     });
     modalConfirm.present();
-
-    this.isDeleted=true;
-    this.isPOPUP=true;
-    this.tempItemName=order.itemName;
-    this.tempItemPrice=order.itemPrice;
-    this.tempItemQuant=order.quant;
-    this.tempDelIndex=index;
   }
 
   placeOrder(){
+    //this.tempConfirmOrder=this.orderMenu.getOrderedMenu();
+
+    let table_ID=this.tableData["id"];
+    let orders=this.orderMenu.getOrderedMenu();
+    console.log(orders);
+    // let data={floorNo:this.floorNo,tableNo:this.tableNo,tableId:table_ID,customerName:this.customerName,order:orders};
 
     if(this.customerName==null || this.customerName==""){
       console.log("No name");
@@ -291,9 +249,18 @@ export class TablePage {
         console.log("Customer Name :",data);
         if(data !=''){
           this.customerName=data;
-          let modalConfirm=this.modalCtrl.create(ConfirmPage,{myParam:'Jeplin'},{cssClass:'inset-modal'});
+
+          //let datasend={orderedData:this.tempConfirmOrder,custName:data};
+          let datasend={floorNo:this.floorNo,tableNo:this.tableNo,tableId:table_ID,customerName:this.customerName,order:orders};
+
+          let modalConfirm=this.modalCtrl.create(ConfirmPage,datasend,{cssClass:'inset-modal'});
           modalConfirm.onDidDismiss(data=>{
             console.log(data);
+            if(data!=''){
+              
+              this.refreshAll();
+              this.getOrderedMenu();
+            }
           });
           modalConfirm.present();
         }
@@ -301,18 +268,25 @@ export class TablePage {
       modalConfirm.present();
     }
     else{
+
+      let data={floorNo:this.floorNo,tableNo:this.tableNo,tableId:table_ID,customerName:this.customerName,order:orders};
+
       console.log("Name Available");
-      let modalConfirm=this.modalCtrl.create(ConfirmPage,{myParam:'Jeplin'},{cssClass:'inset-modal'});
+      let modalConfirm=this.modalCtrl.create(ConfirmPage,data,{cssClass:'inset-modal'});
       modalConfirm.onDidDismiss(data=>{
         console.log(data);
+        if(data!=''){
+          this.refreshAll();
+          this.getOrderedMenu();
+        }
       });
       modalConfirm.present();
 
-      this.isWithName=false;
-      this.isConfirm=true;
+      // this.isWithName=false;
+      // this.isConfirm=true;
     }
     
-    this.tempConfirmOrder=this.orderMenu.getOrderedMenu();
+    //this.tempConfirmOrder=this.orderMenu.getOrderedMenu();
 
     console.log("Confirm Data :",this.customerName);
     
@@ -332,28 +306,18 @@ export class TablePage {
 
       this.refreshAll();
       this.getOrderedMenu();
-      this.isConfirm=false;
+      //this.isConfirm=false;
 
     },error=>{
       console.log("Server Error");
     });
   }
-
-  customerNameSubmit(){
-    console.log("Input ---",this.inputCustomer);
-
-    this.customerName=this.inputCustomer;
-    this.isConfirm=true;
-    this.isWithName=false;
-
-  }
-
-
   refreshAll(){
 
-    this.isOrdered=false;
+      this.isOrdered=false;
+      this.orderedList=[];
 
-    this.orderMenu.resetAllData();
+      this.orderMenu.resetAllData();
 
       let data={floorNo:this.floorNo,tableNo:this.tableNo};
 
@@ -362,14 +326,24 @@ export class TablePage {
       this.menuData.getOrderedData(data).subscribe(data=>{
         console.log("On Success 00",data);
 
+        this.allOrderedData=data;
+
         this.customerName=data[0]["customerName"];
+        //this.isNameDisplay=true;
         this.orderStatus=data[0]["orderStatus"];
-        this.isNameDisplay=true;
-        this.isBill=true;
-        
         console.log("cust:",this.customerName);
-        this.orderedList=data[0]["orders"];
-        console.log("ordss :",this.orderedList);
+        // this.orderedList=data[0]["allorders"];
+        let tempAllOrder=data[0]["allorders"];
+
+        console.log("ordss :",tempAllOrder);
+        tempAllOrder.forEach(element => {
+          let subOrder=element["orders"];
+          subOrder.forEach(element2 => {
+            this.orderedList.push(element2);
+          });
+        });
+        console.log("cust23:",this.orderedList);
+        this.isBill=true;
 
       },error=>{
         console.log("Server Error to get check");

@@ -2,4 +2,28 @@ page-edit {
     ion-footer button {
         margin: 0 !important;
       }
+
+    .itemName{
+        width: 100%;
+    }
+    .itemName table{
+        border:1px solid #d3d3d3;
+    }
+    th{
+        padding: 5px;
+        border-bottom: 1px solid #d3d3d3;
+    }
+    td{
+        padding: 5px;
+        text-align: center;
+    }
+    .quantityDiv{
+        width: 100%;
+    }
+    .quantityDiv{
+        margin-top: 10px;
+    }
+    .quantityDiv table{
+        border:1px solid #d3d3d3;
+    }
 }

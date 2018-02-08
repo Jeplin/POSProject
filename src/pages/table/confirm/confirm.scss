@@ -2,4 +2,18 @@ page-confirm {
     ion-footer button {
         margin: 0 !important;
       }
+    .content{
+        width: 100%;
+    }
+    .content table{
+        width: 100%;
+        border: 1px solid #d3d3d3;
+    }
+    th{
+        padding: 5px;
+        border-bottom: 1px solid #d3d3d3;
+    }
+    td{
+        padding: 5px;
+    }
 }

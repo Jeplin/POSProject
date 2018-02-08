@@ -6,7 +6,7 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>Edit Ord</ion-title>
+    <ion-title>Edit Order</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="cancelDismiss()">
         <ion-icon name='close'></ion-icon>
@@ -15,18 +15,39 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <div style="padding:10px;">
+  <div style="padding:0px;">
       <div class="itemName">
-        
+        <table width="100%">
+          <tr>
+            <th width="60%" style="text-align:left;">Item</th>
+            <th width="40%">Price</th>
+          </tr>
+          <tr>
+            <td style="text-align:left;">{{itemName}}</td>
+            <td style="text-align:center;">&#8377; {{itemPrice}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="quantityDiv">
+        <table width="100%">
+          <tr>
+            <th colspan="3">Quantity</th>
+          </tr>
+          <tr>
+            <td><button ion-button round (click)="decreaseClicked()">-</button></td>
+            <td>{{itemQuant}}</td>
+            <td><button ion-button round (click)="increaseClicked()">+</button></td>
+          </tr>
+        </table>
       </div>
   </div>
 </ion-content>
 <ion-footer>
   <table width="100%">
     <tr>
-      <td item-width="50%"><button ion-button full color="danger" (click)="okayDismiss()">DONE
+      <td width="50%"><button ion-button full color="danger" (click)="okayDismiss()">DONE
         </button></td>
-      <td item-width="50%"><button ion-button full color="danger" (click)="removeDismiss()">REMOVE</button></td>
+      <td width="50%"><button ion-button full color="danger" (click)="removeDismiss()">REMOVE</button></td>
     </tr>
   </table>
 </ion-footer>

@@ -6,7 +6,7 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>Confirm Ord</ion-title>
+    <ion-title>Confirm Order</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="cancelDismiss()">
         <ion-icon name='close'></ion-icon>
@@ -15,16 +15,27 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <div>
-      This is Confirm
+  <div class="content">
+      <table>
+        <tr>
+          <th>Item</th>
+          <th>Quantity</th>
+          <th>Price</th>
+        </tr>
+        <tr *ngFor="let order of orderData">
+          <td>{{order.itemName}}</td>
+          <td style="text-align:center;">{{order.quant}}</td>
+          <td style="text-align:center;">{{order.itemPrice}}</td>
+        </tr>
+      </table>
   </div>
 </ion-content>
 <ion-footer>
   <table width="100%">
     <tr>
-      <td item-width="50%"><button ion-button full color="danger" (click)="okayDismiss()">Confirm
+      <td width="50%"><button ion-button full color="danger" (click)="okayDismiss()">Confirm
         </button></td>
-      <td item-width="50%"><button ion-button full color="danger" (click)="cancelDismiss()">Cancel</button></td>
+      <td width="50%"><button ion-button full color="danger" (click)="cancelDismiss()">Cancel</button></td>
     </tr>
   </table>
 </ion-footer>

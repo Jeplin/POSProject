@@ -42,6 +42,7 @@ import * as moment from 'moment';
 import { EditPage } from '../pages/table/edit/edit';
 import { ConfirmPage } from '../pages/table/confirm/confirm';
 import { CustnamePage } from '../pages/table/custname/custname';
+import { LogViewPage } from '../pages/login/log-view/log-view';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { CustnamePage } from '../pages/table/custname/custname';
     EditPage,
     ConfirmPage,
     CustnamePage,
+    LogViewPage,
   ],
   imports: [
     BrowserModule,
@@ -89,6 +91,7 @@ import { CustnamePage } from '../pages/table/custname/custname';
     EditPage,
     ConfirmPage,
     CustnamePage,
+    LogViewPage,
   ],
   providers: [
     StatusBar,
