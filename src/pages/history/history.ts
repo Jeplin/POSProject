@@ -22,6 +22,8 @@ export class HistoryPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.order="today";
+
+    this.filterAllOrder();
   }
 
   ionViewDidLoad() {
@@ -32,9 +34,17 @@ export class HistoryPage {
 
     this.dailyArray=[];
         // let strDate1:string='2018-02-07T11:40:23';
+<<<<<<< HEAD
         let todaysDate=moment().format('YYYY-MM-DDTHH:mm:ss');
         let strDate2:string='2018-02-07T12:30:00';
         //console.log("Date 1 :",todaysDate,strDate2);
+=======
+
+        let todaysDate=moment().format('YYYY-MM-DDTHH:mm:ss');
+        let strDate2:string='2018-02-07T12:30:00';
+        //console.log("Date 1 :",todaysDate,strDate2);
+
+>>>>>>> 115726a94089d2bbc858c92f4d9a72d6ac718a8e
         let date1:any=new Date(todaysDate);
         let date2:any=new Date(strDate2);
         let time = date1 - date2;  //msec
