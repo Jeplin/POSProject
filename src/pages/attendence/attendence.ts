@@ -33,9 +33,10 @@ export class AttendencePage {
 
   getUserAttendence(){
     this.totTime=[];
-
-    this.attendence.getProfileData().subscribe(data=>{
-        this.attendenceData=data[0]["attendence"];
+    let data={'userId':1};
+    this.attendence.getUserAttendance(data).subscribe(data=>{
+        this.attendenceData=data[0];
+        console.log("Attendence :",this.attendenceData);
         this.attendenceData.forEach(element => {
           console.log("Sign in ",element['id']);
 

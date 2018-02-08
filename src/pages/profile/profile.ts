@@ -15,25 +15,42 @@ import { ApidataProvider } from '../../providers/apidata/apidata';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
+  peraddr_two: any;
+  curraddr_two: any;
+  curraddr_city: any;
+  peraddr_pincode: any;
+  peraddr_country: any;
+  peraddr_state: any;
+  peraddr_city: any;
+  peraddr_one: string;
+  curraddr_pincode: any;
+  curraddr_country: any;
+  curraddr_state: any;
+  curraddr_one: any;
   username: string;
   name:string;
+  occupation:string;
   email:string;
   contact:string;
-  curraddress:string;
-  perAddress:string;
+  dob:string;
+  joining:string;
+  fathername:string;
+  mothername:string;
+  familynumber:string;
 
+  curraddress:any;
+  perAddress:any;
+
+  allData:any;
   profileData: any;
 
   user = {
     name: 'Jeplin Devbarma',
-    profileImage: 'assets/imgs/1.jpg',
-    coverImage: 'assets/imgs/5.jpg',
+    profileImage: 'assets/imgs/logo.png',
+    coverImage: 'assets/imgs/1.jpg',
     occupation: 'Developer',
     location: 'India,IND',
     description: 'The test description to check is working.',
-    followers: 456,
-    following: 1052,
-    posts: 35
   };
 
   isEdit:boolean;
@@ -45,6 +62,7 @@ export class ProfilePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,private profile:ApidataProvider) {
   
+    this.getUserProfileData();
     this.isEdit=false;
     this.editButtontitle="Edit";
     this.countrySelectPer="India";
@@ -97,35 +115,60 @@ export class ProfilePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
+
+    //this.getUserProfileData();
+  }
+
+  ionViewWillEnter(){
+    console.log("Will Enter Load");
     this.getUserProfileData();
   }
 
   getUserProfileData(){
     this.profile.getProfileData().subscribe(data=>{
-      this.profileData=data[0]["userdetail"];
-
-      console.log("Profile : ",this.profileData['name']);
-      
-
-      this.displayUserData();
-
-
+      //this.allData=data[0];
+      console.log("Profile : ",data[0]);
+      this.displayUserData(data[0]);
     });
   }
 
-  displayUserData(){
-    this.username=this.profileData['username'];
-    this.name=this.profileData['name'];
-    this.email=this.profileData['email'];
-    this.contact=this.profileData['contact'];
-    this.curraddress=this.profileData['current_address'];
-    this.perAddress=this.profileData['permanent_address'];
+  displayUserData(data){
+   
+    console.log("display :",data);
+    
+    this.name=data['firstName'] +' '+ data['lastName'];
+
+    this.username=data['username'];
+    this.occupation=data['userType'];
+    console.log('deytail :',data['details']['detail']);
+    this.email=data['details']['detail']['email'];
+    this.contact=data['details']['detail']['contact'];
+    this.dob=data['details']['detail']['dob'];
+    this.joining=data['joiningDate'];
+    this.fathername=data['details']['detail']['fathername'];
+    this.mothername=data['details']['detail']['mothername'];
+    this.familynumber=data['details']['detail']['familycontact'];
+
+    this.curraddr_one=data['details']['currentAddress']['address_one'];
+    this.curraddr_two=data['details']['currentAddress']['address_two'];
+    this.curraddr_city=data['details']['currentAddress']['city'];
+    this.curraddr_state=data['details']['currentAddress']['state'];
+    this.curraddr_country=data['details']['currentAddress']['country'];
+    this.curraddr_pincode=data['details']['currentAddress']['pincode'];
+
+    this.peraddr_one=data['details']['permanentAddress']['address_one'];
+    this.peraddr_two=data['details']['permanentAddress']['address_two'];
+    this.peraddr_city=data['details']['permanentAddress']['city'];
+    this.peraddr_state=data['details']['permanentAddress']['state'];
+    this.peraddr_country=data['details']['permanentAddress']['country'];
+    this.peraddr_pincode=data['details']['permanentAddress']['pincode'];
+
   }
 
   editClicked(){
     this.isEdit=!this.isEdit;
     if(this.isEdit){
-      this.editButtontitle="Update";
+      this.editButtontitle="Cancel";
     }
     else{
       this.editButtontitle="Edit";

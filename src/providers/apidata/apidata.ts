@@ -57,5 +57,13 @@ export class ApidataProvider {
     }).do(res=>console.log(res));
   }
 
+  getUserAttendance(data){
+    return this.http.post(this.apiURL+"getUserAttendance.php",data,{
+      headers : {
+        'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
+    }).do(res=>console.log(res));
+  }
+
 
 }

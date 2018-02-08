@@ -34,6 +34,10 @@ export class Home2Page {
   ionViewDidLoad() {
     console.log('ionViewDidLoad Home2Page');
   }
+  ionViewWillEnter(){
+    console.log("Will Enter");
+    this.getLayoutData();
+  }
 
   displayFloorUI(){
     this.floorNo=this.floor.getFloorCount();
