@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController,ToastController, ModalController } from 'ionic-angular';
 import { FloorCountProvider } from '../../../providers/floor-count/floor-count';
 import { Network } from '@ionic-native/network';
 import { NavmenuPage } from '../../navmenu/navmenu';
+import { ApidataProvider } from '../../../providers/apidata/apidata';
+import { Storage } from '@ionic/storage';
+import * as moment from 'moment';
 
 /**
  * Generated class for the LogViewPage page.
@@ -18,10 +21,14 @@ import { NavmenuPage } from '../../navmenu/navmenu';
 })
 export class LogViewPage {
 
+  username="";
+  password="";
+
   showPasswordFlag:boolean;
   isShowPassword:boolean=true;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private floorCount:FloorCountProvider,private network: Network,private alertCtrl:AlertController,private modalCtrl:ModalController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private floorCount:FloorCountProvider,private network: Network,private alertCtrl:AlertController,private modalCtrl:ModalController,private toastCtrl:ToastController,private apiCall:ApidataProvider,private storage:Storage) {
+
     this.mainDisplayMethod();
   }
 
@@ -34,7 +41,7 @@ export class LogViewPage {
    
     this.network.onDisconnect().subscribe(data => {
       console.log("No Connect",data)
-      this.showAlert();
+      this.showAlert('No Internet','No internet access..');
     }, error => console.error(error));
   }
 
@@ -56,15 +63,73 @@ export class LogViewPage {
 
   loginMethod(){
 
-     this.floorCount.setFloorCount(1);
-     this.navCtrl.setRoot(NavmenuPage);
-    //this.navCtrl.setRoot(HistoryPage);
+    console.log("data : ",this.username,this.password);
+    if(this.username==""){
+      this.showToast();
+    }
+    else if(this.password==""){
+      this.showToast();
+    }
+    else{
+      let data={
+        username:this.username,
+        password:this.password
+      }
+      this.apiCall.getLoginData(data).subscribe(data=>{
+        console.log("User Data :",data);
+        if(data!=""){
+          //console.log("Data available");
+          if(data[0]['user_type_id']==2){
+            let user=data[0]['fname'] +' '+data[0]['lname'];
+            //console.log(user);
+            this.storage.set('userId',data[0]['id']);
+            this.storage.set('username',user);
+
+            this.setUserAttendance(data[0]['id']);
+            this.floorCount.setFloorCount(1);
+            this.navCtrl.setRoot(NavmenuPage);
+          }
+          else{
+            this.showAlert('Invalid User','Invalid username and password. Please try again..');
+          } 
+        }
+        else{
+          this.showAlert('Invalid User','Invalid username and password. Please try again..');
+        }
+        this.username="";
+        this.password="";
+      })
+    }
   }
 
-  showAlert() {
+  setUserAttendance(userid){
+    let todaysDate=moment().format('YYYY-MM-DD HH:mm:ss');
+    console.log("Todays :",todaysDate);
+    let data={
+      userId:userid,
+      inTime:todaysDate,
+      outTime:'',
+      att_id:''
+    }
+     this.apiCall.setAttendance(data).subscribe(data=>{
+       console.log(data['message']);
+       this.storage.set('attId',data['message']);
+     });
+
+  }
+
+  showToast(){
+    let toast = this.toastCtrl.create({
+      message: 'Empty field not allowed!',
+      duration: 3000
+    });
+    toast.present();
+  }
+
+  showAlert(title,message) {
     let alert = this.alertCtrl.create({
-      title: 'Connection Error!',
-      subTitle: 'No internet connection available',
+      title: title,
+      subTitle: message,
       buttons: ['OK']
     });
     alert.present();

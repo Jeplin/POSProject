@@ -44,6 +44,8 @@ import { ConfirmPage } from '../pages/table/confirm/confirm';
 import { CustnamePage } from '../pages/table/custname/custname';
 import { LogViewPage } from '../pages/login/log-view/log-view';
 
+import { IonicStorageModule } from '@ionic/storage';
+
 
 @NgModule({
   declarations: [
@@ -69,6 +71,7 @@ import { LogViewPage } from '../pages/login/log-view/log-view';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     HttpClientModule,
     ChartsModule,
   ],

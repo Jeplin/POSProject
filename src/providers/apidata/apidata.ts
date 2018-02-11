@@ -21,6 +21,22 @@ export class ApidataProvider {
     console.log('Hello ApidataProvider Provider');
   }
 
+  getLoginData(data){
+    return this.http.post(this.apiURL+"getLogin.php",data,{
+      headers : {
+        'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
+    }).do(res=>console.log(res));
+  }
+
+  setAttendance(data){
+    return this.http.post(this.apiURL+"setAttendance.php",data,{
+      headers : {
+        'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
+    }).do(res=>console.log(res));
+  }
+
   getLayoutData(){
     return this.http.get(this.apiURL+"getLayout.php").do(res =>console.log(res));
   }
@@ -29,8 +45,13 @@ export class ApidataProvider {
     return this.http.get(this.apiURL+"getMenuData.php").do(res =>console.log(res));
   }
 
-  getProfileData(){
-    return this.http.get(this.apiURL+"getUserData.php").do(res=>console.log(res));
+  getProfileData(data){
+    console.log("Profile :",data);
+    return this.http.post(this.apiURL+"getUserData.php",data,{
+      headers : {
+          'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+      }
+    }).do(res=>console.log(res));
   }
 
   postOrderedMenu(data){

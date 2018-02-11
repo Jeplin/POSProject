@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApidataProvider } from '../../providers/apidata/apidata';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the AttendencePage page.
@@ -19,22 +20,30 @@ export class AttendencePage {
   attendenceData:any;
   totTime:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private attendence:ApidataProvider) {
-    
-    
+  constructor(public navCtrl: NavController, public navParams: NavParams,private attendence:ApidataProvider,private storage:Storage) {
 
-    this.getUserAttendence();
+    this.localStorage();
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AttendencePage');
     
   }
+  localStorage(){
+    this.storage.get('userId').then((val)=>{
+      console.log(val);
+      this.getUserAttendence(val);
+    });
+    
+  }
 
-  getUserAttendence(){
+  getUserAttendence(userid){
     this.totTime=[];
-    let data={'userId':1};
+
+    let data={'userId':userid};
     this.attendence.getUserAttendance(data).subscribe(data=>{
+      if(data!=""){
         this.attendenceData=data[0];
         console.log("Attendence :",this.attendenceData);
         this.attendenceData.forEach(element => {
@@ -82,7 +91,10 @@ export class AttendencePage {
 
         });
         console.log("Attendence :",this.attendenceData);
-    })
+      }  
+      
+    });
   }
+
 
 }

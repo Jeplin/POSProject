@@ -13,6 +13,7 @@ import { ModalController } from 'ionic-angular/components/modal/modal-controller
 import { ConfirmPage } from './confirm/confirm';
 import { EditPage } from './edit/edit';
 import { CustnamePage } from './custname/custname';
+import { Storage } from '@ionic/storage';
 
 //import { trigger, state, style, animate, transition } from '@angular/animations';
 
@@ -56,7 +57,7 @@ export class TablePage {
   // isDeleted:boolean=false;
   // isConfirm:boolean=false;
   // isWithName:boolean=false;
-  // isNameDisplay:boolean=false;
+   isNameDisplay:boolean=false;
    isBill:boolean=false;
 
   // temp storage variable
@@ -69,12 +70,15 @@ export class TablePage {
 
   customerName:string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private menuData:ApidataProvider,private tableDetail:TableDetailsProvider,private floorDetail:FloorCountProvider,private orderMenu:OrdermenuProvider,private modalCtrl:ModalController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private menuData:ApidataProvider,private tableDetail:TableDetailsProvider,private floorDetail:FloorCountProvider,private orderMenu:OrdermenuProvider,private modalCtrl:ModalController,private storage:Storage) {
     this.getMenuData();
 
     this.orderMenu.resetAllData();
     // this.displayChart();
- 
+      
+    storage.get('userId').then((val)=>{
+      console.log("userId",val);
+    });
 
   }
 
@@ -115,27 +119,27 @@ export class TablePage {
 
       this.menuData.getOrderedData(data).subscribe(data=>{
         console.log("On Success",data);
-
-        this.allOrderedData=data;
-
-        this.customerName=data[0]["customerName"];
-        //this.isNameDisplay=true;
-        this.orderStatus=data[0]["orderStatus"];
-        console.log("cust:",this.customerName);
-        // this.orderedList=data[0]["allorders"];
-        let tempAllOrder=data[0]["allorders"];
-
-        console.log("ordss :",tempAllOrder);
-        tempAllOrder.forEach(element => {
-          let subOrder=element["orders"];
-          subOrder.forEach(element2 => {
-            this.orderedList.push(element2);
+        if(data!=""){
+          this.allOrderedData=data;
+        
+          this.customerName=data[0]["customerName"];
+          this.isNameDisplay=true;
+          this.orderStatus=data[0]["orderStatus"];
+          console.log("cust:",this.customerName);
+          // this.orderedList=data[0]["allorders"];
+          let tempAllOrder=data[0]["allorders"];
+  
+          console.log("ordss :",tempAllOrder);
+          tempAllOrder.forEach(element => {
+            let subOrder=element["orders"];
+            subOrder.forEach(element2 => {
+              this.orderedList.push(element2);
+            });
           });
-        });
-        console.log("cust23:",this.orderedList);
-
-        this.isBill=true;
-
+          console.log("cust23:",this.orderedList);
+  
+          this.isBill=true;
+        }
       },error=>{
         console.log("Server Error to get check");
       });
@@ -292,26 +296,26 @@ export class TablePage {
     
   }
 
-  confirmClicked(){
+  // confirmClicked(){
 
-    //this.customerName="Jeplin";
+  //   //this.customerName="Jeplin";
 
-    let table_ID=this.tableData["id"];
-    let orders=this.orderMenu.getOrderedMenu();
-    console.log(orders);
-    let data={floorNo:this.floorNo,tableNo:this.tableNo,tableId:table_ID,customerName:this.customerName,order:orders};
+  //   let table_ID=this.tableData["id"];
+  //   let orders=this.orderMenu.getOrderedMenu();
+  //   console.log(orders);
+  //   let data={floorNo:this.floorNo,tableNo:this.tableNo,tableId:table_ID,customerName:this.customerName,order:orders};
 
-    this.menuData.postOrderedMenu(data).subscribe(data=>{
-      console.log("On Success -- cnfrm",data);
+  //   this.menuData.postOrderedMenu(data).subscribe(data=>{
+  //     console.log("On Success -- cnfrm",data);
 
-      this.refreshAll();
-      this.getOrderedMenu();
-      //this.isConfirm=false;
+  //     this.refreshAll();
+  //     this.getOrderedMenu();
+  //     //this.isConfirm=false;
 
-    },error=>{
-      console.log("Server Error");
-    });
-  }
+  //   },error=>{
+  //     console.log("Server Error");
+  //   });
+  // }
   refreshAll(){
 
       this.isOrdered=false;
@@ -329,7 +333,7 @@ export class TablePage {
         this.allOrderedData=data;
 
         this.customerName=data[0]["customerName"];
-        //this.isNameDisplay=true;
+        this.isNameDisplay=true;
         this.orderStatus=data[0]["orderStatus"];
         console.log("cust:",this.customerName);
         // this.orderedList=data[0]["allorders"];

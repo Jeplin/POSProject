@@ -10,7 +10,11 @@ import { TablePage } from '../table/table';
 import { OrdermenuCardPage } from '../ordermenu-card/ordermenu-card';
 import { MembershipPage } from '../membership/membership';
 import { HistoryPage } from '../history/history';
+import { Storage } from '@ionic/storage';
 //import { ProfiletabPage } from '../profiletab/profiletab';
+
+import * as moment from 'moment';
+import { ApidataProvider } from '../../providers/apidata/apidata';
 
 
 /**
@@ -28,11 +32,22 @@ import { HistoryPage } from '../history/history';
 export class NavmenuPage {
   @ViewChild(Nav) nav: Nav;
   
+    user="";
+    UserId="";
     rootPage: any = Home1Page;
   
     pages: Array<{title: string, component: any, icon:any}>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private storage:Storage,private apiCall:ApidataProvider) {
+
+    storage.get('username').then((val)=>{
+      this.user=val;
+      console.log("user:",val);
+    });
+
+    storage.get('userId').then((val)=>{
+      this.UserId=val;
+    });
 
     this.pages = [
       { title: 'Tables', component: Home1Page , icon:"help-buoy" },
@@ -60,7 +75,30 @@ export class NavmenuPage {
   }
 
   logoutMethod(){
+
+    this.storage.get('attId').then((val)=>{
+      console.log(val);
+      this.setUserAttendance(val);
+    });
+
+    this.storage.clear();
+    
     this.navCtrl.setRoot(LoginPage);
+  }
+
+  setUserAttendance(attId){
+    let todaysDate=moment().format('YYYY-MM-DD HH:mm:ss');
+    console.log("Todays :",todaysDate);
+    let data={
+      userId:this.UserId,
+      inTime:'',
+      outTime:todaysDate,
+      att_id:attId
+    }
+     this.apiCall.setAttendance(data).subscribe(data=>{
+       console.log(data['message']);
+       //this.storage.set('attId',data['message']);
+     });
   }
 
 }

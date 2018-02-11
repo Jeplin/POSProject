@@ -4,7 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-content padding>
+<ion-content>
   <div class="loginInnerDiv">
     <div id="logoDiv">
       <div class="logoInnerDiv">
@@ -15,11 +15,11 @@
       <div id="inputDiv">
         <div class="usernameDiv">
             <!-- <ion-input type="text" placeholder="Username"></ion-input> -->
-            <input type="text" placeholder="Username" class="textInput">
+            <input type="text" name="username" [(ngModel)]="username" placeholder="Username" class="textInput">
         </div>
         <div class="passwordDiv">
             <!-- <ion-input type="{{ isShowPassword ? 'password' : 'text' }}" placeholder="Password"></ion-input> -->
-            <input type="{{ isShowPassword ? 'password' : 'text' }}" placeholder="Password">
+            <input type="{{ isShowPassword ? 'password' : 'text' }}" [(ngModel)]="password" name="password" placeholder="Password">
             <div class="showPasswordDiv" (click)="passwordShow()">
                 <ion-icon name="{{ isShowPassword ? 'eye' : 'eye-off' }}"></ion-icon>  
             </div>          
@@ -31,12 +31,4 @@
     </div>
   </div>
 </ion-content>
-<!-- <ion-footer>
-  <table width="100%">
-    <tr>
-      <td item-width="50%"><button ion-button full color="danger">Confirm
-        </button></td>
-      <td item-width="50%"><button ion-button full color="danger">Cancel</button></td>
-    </tr>
-  </table>
-</ion-footer> -->
+

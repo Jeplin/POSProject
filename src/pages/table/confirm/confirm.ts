@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { ApidataProvider } from '../../../providers/apidata/apidata';
+import { Storage } from '@ionic/storage';
+
 
 /**
  * Generated class for the ConfirmPage page.
@@ -16,15 +18,19 @@ import { ApidataProvider } from '../../../providers/apidata/apidata';
 })
 export class ConfirmPage {
 
+  userId="";
   orderData:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private viewCtrl:ViewController,private menuData:ApidataProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private viewCtrl:ViewController,private menuData:ApidataProvider,private storage:Storage) {
     
      console.log("Cust Name : ",this.navParams.get('floorNo'));
     console.log("Data Order : ",this.navParams.get('order'));
 
     this.orderData=this.navParams.get('order');
 
+    storage.get('userId').then((val)=>{
+      this.userId=val;
+    });
 
   
   }
@@ -34,14 +40,11 @@ export class ConfirmPage {
   }
 
   okayDismiss() {
-    let data={floorNo:this.navParams.get('floorNo'),tableNo:this.navParams.get('tableNo'),tableId:this.navParams.get('tableId'),customerName:this.navParams.get('customerName'),order:this.navParams.get('order')};
+
+    let data={floorNo:this.navParams.get('floorNo'),tableNo:this.navParams.get('tableNo'),tableId:this.navParams.get('tableId'),customerName:this.navParams.get('customerName'),order:this.navParams.get('order'),userId:this.userId};
 
     this.menuData.postOrderedMenu(data).subscribe(data=>{
       console.log("On Success -- cnfrm",data);
-
-      // this.refreshAll();
-      // this.getOrderedMenu();
-      // this.isConfirm=false;
       this.viewCtrl.dismiss('okay');
 
     },error=>{

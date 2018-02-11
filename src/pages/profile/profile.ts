@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApidataProvider } from '../../providers/apidata/apidata';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the ProfilePage page.
@@ -45,12 +46,12 @@ export class ProfilePage {
   profileData: any;
 
   user = {
-    name: 'Jeplin Devbarma',
+    name: '',
     profileImage: 'assets/imgs/logo.png',
     coverImage: 'assets/imgs/1.jpg',
     occupation: 'Developer',
     location: 'India,IND',
-    description: 'The test description to check is working.',
+    description: '',
   };
 
   isEdit:boolean;
@@ -60,7 +61,7 @@ export class ProfilePage {
   countrySelectCur:any;
   countrySelectPer:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private profile:ApidataProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private profile:ApidataProvider,private storage:Storage) {
   
     this.getUserProfileData();
     this.isEdit=false;
@@ -125,10 +126,23 @@ export class ProfilePage {
   }
 
   getUserProfileData(){
-    this.profile.getProfileData().subscribe(data=>{
+    let UserId="";
+    this.storage.get('userId').then((val)=>{
+      UserId=val;
+      console.log("userId",UserId);
+      this.profileDataApi(val);
+    });
+  }
+  profileDataApi(user){
+    let data={
+      userId:user
+    }
+    this.profile.getProfileData(data).subscribe(data=>{
       //this.allData=data[0];
       console.log("Profile : ",data[0]);
-      this.displayUserData(data[0]);
+      if(data!=""){
+        this.displayUserData(data[0]);
+      }
     });
   }
 
@@ -178,6 +192,10 @@ export class ProfilePage {
 
   updateData(){
     console.log("Update Data Clicked");
+  }
+
+  showAlert(title,message){
+
   }
   
 }
