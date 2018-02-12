@@ -1,60 +1,172 @@
 <!--
   Generated template for the ProfilePage page.
-
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
 <ion-header>
-    <ion-navbar color="header">
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
+  <ion-navbar color="header">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Profile</ion-title>
+    <ion-buttons end>
+      <button ion-button only-icon (click)="editClicked()">
+        {{editButtontitle}}
       </button>
-      <ion-title>Profile</ion-title>
-      <ion-buttons end>
-        <button ion-button only-icon (click)="editClicked()">
-          {{editButtontitle}}
-        </button>
-      </ion-buttons>
-    </ion-navbar>
-  </ion-header>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
 
-  <ion-content padding class="transparent-header">
-    <div id="profile-bg" [ngStyle]="{'background-image': 'url(' + user.coverImage +')'}"></div>
+<ion-content padding class="transparent-header">
+  <div id="profile-bg" [ngStyle]="{'background-image': 'url(' + user.coverImage +')'}"></div>
+  
+  <div id="content">
     
-    <div id="content">
-      
-      <div id="profile-info" padding>
-        <img id="profile-image" [src]="user.profileImage">
-        <h3 id="profile-name">{{name}}</h3>
-        <p>{{occupation}} &bull; {{peraddr_state}},{{peraddr_country}}</p>
-      </div>
-      
-      <div class="detailContent" *ngIf="!isEdit">
-        <ion-card>
+    <div id="profile-info" padding>
+      <img id="profile-image" [src]="user.profileImage">
+      <h3 id="profile-name">{{name}}</h3>
+      <p>{{occupation}} &bull; {{peraddr_state}},{{peraddr_country}}</p>
+    </div>
+    
+    <div class="detailContent" *ngIf="!isEdit">
+      <ion-card>
+        <ion-item>
+          <ion-label>Personal Details</ion-label>
+        </ion-item>
+        <ion-card-content>
+          <table>
+            <tr>
+              <td class="col1">Username : </td>
+              <td>{{username}}</td>
+            </tr>
+            <tr>
+              <td class="col1">Email : </td>
+              <td>{{email}}</td>
+            </tr>
+            <tr>
+              <td class="col1">DOB : </td>
+              <td>{{dob}}</td>
+            </tr>
+            <tr>
+              <td class="col1">Date of Joining : </td>
+              <td>{{joining}} </td>
+            </tr>
+            <tr>
+              <td class="col1">Phone Number : </td>
+              <td>{{contact}}</td>
+            </tr>
+          </table>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
           <ion-item>
-            <ion-label>Personal Details</ion-label>
+            <ion-label>Family Details</ion-label>
           </ion-item>
           <ion-card-content>
             <table>
               <tr>
-                <td class="col1">Username : </td>
-                <td>{{username}}</td>
+                <td class="col1">Father's Name : </td>
+                <td>{{fathername}}</td>
               </tr>
               <tr>
-                <td class="col1">Email : </td>
-                <td>{{email}}</td>
-              </tr>
-              <tr>
-                <td class="col1">DOB : </td>
-                <td>{{dob}}</td>
-              </tr>
-              <tr>
-                <td class="col1">Date of Joining : </td>
-                <td>{{joining}} </td>
+                <td class="col1">Mother's Name : </td>
+                <td>{{mothername}}</td>
               </tr>
               <tr>
                 <td class="col1">Phone Number : </td>
-                <td>{{contact}}</td>
+                <td>{{familynumber}}</td>
+              </tr>
+            </table>
+          </ion-card-content>
+        </ion-card>
+
+      <ion-card>
+          <ion-item>
+            <ion-label>Current Address Details</ion-label>
+          </ion-item>
+          <ion-card-content>
+            <table>
+              <tr>
+                <td class="col1">Address : </td>
+                <td>{{curraddr_one}}, {{curraddr_two}}</td>
+              </tr>
+              <tr>
+                <td class="col1">City : </td>
+                <td>{{curraddr_city}}</td>
+              </tr>
+              <tr>
+                <td class="col1">State : </td>
+                <td>{{curraddr_state}}</td>
+              </tr>
+              <tr>
+                <td class="col1">Country : </td>
+                <td>{{curraddr_country}}</td>
+              </tr>
+              <tr>
+                <td class="col1">Pincode : </td>
+                <td>{{curraddr_pincode}}</td>
+              </tr>
+            </table>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+            <ion-item>
+              <ion-label>Permanent Address Details</ion-label> 
+            </ion-item>
+            <ion-card-content>
+              <table>
+                <tr>
+                  <td class="col1">Address : </td>
+                  <td>{{peraddr_one}}, {{peraddr_two}}</td>
+                </tr>
+                <tr>
+                  <td class="col1">City : </td>
+                  <td>{{peraddr_city}}</td>
+                </tr>
+                <tr>
+                  <td class="col1">State : </td>
+                  <td>{{peraddr_state}}</td>
+                </tr>
+                <tr>
+                  <td class="col1">Country : </td>
+                  <td>{{peraddr_country}}</td>
+                </tr>
+                <tr>
+                  <td class="col1">Pincode : </td>
+                  <td>{{peraddr_pincode}}</td>
+                </tr>
+              </table>
+            </ion-card-content>
+          </ion-card>
+    </div>
+
+    <!-- Edit Detail -->
+    <div class="detailContent" *ngIf="isEdit">
+        <ion-card>
+          <ion-item>
+            <ion-label>Personal Details</ion-label> 
+          </ion-item>
+          <ion-card-content>
+            <table>
+              <tr>
+                <td class="col1">Email : </td>
+                <td>
+                  <input type="email" name="email" [(ngModel)]="email" value="{{email}}" placeholder="Email">
+                </td>
+              </tr>
+              <!-- <tr>
+                <td class="col1">DOB : </td>
+                <td>
+                  <input type="text" name="dob" [(ngModel)]="dob" value="{{dob}}" placeholder="DOB">
+                </td>
+              </tr> -->
+              <tr>
+                <td class="col1">Phone Number : </td>
+                <td>
+                  <input type="tel" name="phone" [(ngModel)]="contact" value="{{contact}}" placeholder="phone number">
+                </td>
               </tr>
             </table>
           </ion-card-content>
@@ -68,15 +180,21 @@
               <table>
                 <tr>
                   <td class="col1">Father's Name : </td>
-                  <td>{{fathername}}</td>
+                  <td>
+                    <input type="text" name="fathername" [(ngModel)]="fathername" value="{{fathername}}" placeholder="Father's Name">
+                  </td>
                 </tr>
                 <tr>
                   <td class="col1">Mother's Name : </td>
-                  <td>{{mothername}}</td>
+                  <td>
+                    <input type="text" name="mothername" [(ngModel)]="mothername" value="{{mothername}}" placeholder="Mother's Name">
+                  </td>
                 </tr>
                 <tr>
                   <td class="col1">Phone Number : </td>
-                  <td>{{familynumber}}</td>
+                  <td>
+                    <input type="tel" name="phone" [(ngModel)]="familynumber" value="{{familynumber}}" placeholder="Phone Number">
+                  </td>
                 </tr>
               </table>
             </ion-card-content>
@@ -84,29 +202,47 @@
   
         <ion-card>
             <ion-item>
-              <ion-label>Current Address Details</ion-label>
+              <ion-label>Current Address Details</ion-label> 
             </ion-item>
             <ion-card-content>
               <table>
                 <tr>
-                  <td class="col1">Address : </td>
-                  <td>{{curraddr_one}}, {{curraddr_two}}</td>
+                  <td class="col1">Address 1 : </td>
+                  <td>
+                    <input type="textarea" name="address1" [(ngModel)]="curraddr_one" value="{{curraddr_one}}" placeholder="Address 1">
+                  </td>
+                </tr>
+                <tr>
+                  <td class="col1">Address 2 : </td>
+                  <td>
+                    <input type="textarea" name="address2" [(ngModel)]="curraddr_two" value="{{curraddr_two}}" placeholder="Address 2">
+                  </td>
                 </tr>
                 <tr>
                   <td class="col1">City : </td>
-                  <td>{{curraddr_city}}</td>
+                  <td>
+                    <input type="text" name="city" [(ngModel)]="curraddr_city" value="{{curraddr_city}}" placeholder="City">
+                  </td>
                 </tr>
                 <tr>
                   <td class="col1">State : </td>
-                  <td>{{curraddr_state}}</td>
+                  <td>
+                    <input type="text" name="state" [(ngModel)]="curraddr_state" value="{{curraddr_state}}" placeholder="State">
+                  </td>
                 </tr>
                 <tr>
                   <td class="col1">Country : </td>
-                  <td>{{curraddr_country}}</td>
+                  <td>
+                    <ion-select [(ngModel)]="countrySelectCur">
+                      <ion-option *ngFor="let country of countries" value="{{country}}">{{country}}</ion-option>
+                    </ion-select>
+                  </td>
                 </tr>
                 <tr>
                   <td class="col1">Pincode : </td>
-                  <td>{{curraddr_pincode}}</td>
+                  <td>
+                    <input type="text" name="pincode" [(ngModel)]="curraddr_pincode" value="{{curraddr_pincode}}" placeholder="Pincode">
+                  </td>
                 </tr>
               </table>
             </ion-card-content>
@@ -114,194 +250,58 @@
   
           <ion-card>
               <ion-item>
-                <ion-label>Permanent Address Details</ion-label> 
+                <ion-label>Permanent Address Details</ion-label>
               </ion-item>
               <ion-card-content>
-                <table>
-                  <tr>
-                    <td class="col1">Address : </td>
-                    <td>{{peraddr_one}}, {{peraddr_two}}</td>
-                  </tr>
-                  <tr>
-                    <td class="col1">City : </td>
-                    <td>{{peraddr_city}}</td>
-                  </tr>
-                  <tr>
-                    <td class="col1">State : </td>
-                    <td>{{peraddr_state}}</td>
-                  </tr>
-                  <tr>
-                    <td class="col1">Country : </td>
-                    <td>{{peraddr_country}}</td>
-                  </tr>
-                  <tr>
-                    <td class="col1">Pincode : </td>
-                    <td>{{peraddr_pincode}}</td>
-                  </tr>
-                </table>
-              </ion-card-content>
+                  <table>
+                    <tr>
+                      <td class="col1">Address 1 : </td>
+                      <td>
+                        <input type="textarea" name="address1" [(ngModel)]="peraddr_one" value="{{peraddr_one}}" placeholder="Address 1">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="col1">Address 2 : </td>
+                      <td>
+                        <input type="textarea" name="address2" [(ngModel)]="peraddr_two" value="{{peraddr_two}}" placeholder="Address 2">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="col1">City : </td>
+                      <td>
+                        <input type="text" name="city" [(ngModel)]="peraddr_city" value="{{peraddr_city}}" placeholder="City">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="col1">State : </td>
+                      <td>
+                        <input type="text" name="state" [(ngModel)]="peraddr_state" value="{{peraddr_state}}" placeholder="State">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="col1">Country : </td>
+                      <td>
+                        <ion-select [(ngModel)]="countrySelectPer">
+                          <ion-option *ngFor="let country of countries" value="{{country}}">{{country}}</ion-option>
+                        </ion-select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="col1">Pincode : </td>
+                      <td>
+                        <input type="text" name="pincode" [(ngModel)]="peraddr_pincode" value="{{peraddr_pincode}}" placeholder="Pincode">
+                      </td>
+                    </tr>
+                  </table>
+                </ion-card-content>
+            </ion-card>
+
+            <ion-card>
+              <ion-item>
+                <button ion-button block (click)="updateClicked()">UPDATE</button>
+              </ion-item>                   
             </ion-card>
       </div>
-  
-      <!-- Edit Detail -->
-      <div class="detailContent" *ngIf="isEdit">
-          <ion-card>
-            <ion-item>
-              <ion-label>Personal Details</ion-label> 
-            </ion-item>
-            <ion-card-content>
-              <table>
-                <tr>
-                  <td class="col1">Email : </td>
-                  <td>
-                    <input type="email" name="email" value="{{email}}" placeholder="Email">
-                  </td>
-                </tr>
-                <tr>
-                  <td class="col1">DOB : </td>
-                  <td>
-                    <input type="text" name="dob" value="{{dob}}" placeholder="DOB">
-                  </td>
-                </tr>
-                <tr>
-                  <td class="col1">Phone Number : </td>
-                  <td>
-                    <input type="tel" name="phone" value="{{contact}}" placeholder="phone number">
-                  </td>
-                </tr>
-              </table>
-            </ion-card-content>
-          </ion-card>
-    
-          <ion-card>
-              <ion-item>
-                <ion-label>Family Details</ion-label>
-              </ion-item>
-              <ion-card-content>
-                <table>
-                  <tr>
-                    <td class="col1">Father's Name : </td>
-                    <td>
-                      <input type="text" name="fathername" value="{{fathername}}" placeholder="Father's Name">
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="col1">Mother's Name : </td>
-                    <td>
-                      <input type="text" name="mothername" value="{{mothername}}" placeholder="Mother's Name">
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="col1">Phone Number : </td>
-                    <td>
-                      <input type="tel" name="phone" value="{{familynumber}}" placeholder="Phone Number">
-                    </td>
-                  </tr>
-                </table>
-              </ion-card-content>
-            </ion-card>
-    
-          <ion-card>
-              <ion-item>
-                <ion-label>Current Address Details</ion-label> 
-              </ion-item>
-              <ion-card-content>
-                <table>
-                  <tr>
-                    <td class="col1">Address 1 : </td>
-                    <td>
-                      <input type="textarea" name="address1" value="{{curraddr_one}}" placeholder="Address 1">
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="col1">Address 2 : </td>
-                    <td>
-                      <input type="textarea" name="address2" value="{{curraddr_two}}" placeholder="Address 2">
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="col1">City : </td>
-                    <td>
-                      <input type="text" name="city" value="{{curraddr_city}}" placeholder="City">
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="col1">State : </td>
-                    <td>
-                      <input type="text" name="state" value="{{curraddr_state}}" placeholder="State">
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="col1">Country : </td>
-                    <td>
-                      <ion-select [(ngModel)]="countrySelectCur">
-                        <ion-option *ngFor="let country of countries" value="{{country}}">{{country}}</ion-option>
-                      </ion-select>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="col1">Pincode : </td>
-                    <td>
-                      <input type="text" name="pincode" value="{{curraddr_pincode}}" placeholder="Pincode">
-                    </td>
-                  </tr>
-                </table>
-              </ion-card-content>
-            </ion-card>
-    
-            <ion-card>
-                <ion-item>
-                  <ion-label>Permanent Address Details</ion-label>
-                </ion-item>
-                <ion-card-content>
-                    <table>
-                      <tr>
-                        <td class="col1">Address 1 : </td>
-                        <td>
-                          <input type="textarea" name="address1" value="{{peraddr_one}}" placeholder="Address 1">
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="col1">Address 2 : </td>
-                        <td>
-                          <input type="textarea" name="address2" value="{{peraddr_two}}" placeholder="Address 2">
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="col1">City : </td>
-                        <td>
-                          <input type="text" name="city" value="{{peraddr_city}}" placeholder="City">
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="col1">State : </td>
-                        <td>
-                          <input type="text" name="state" value="{{peraddr_state}}" placeholder="State">
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="col1">Country : </td>
-                        <td>
-                          <ion-select [(ngModel)]="countrySelectPer">
-                            <ion-option *ngFor="let country of countries" value="{{country}}">{{country}}</ion-option>
-                          </ion-select>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="col1">Pincode : </td>
-                        <td>
-                          <input type="text" name="pincode" value="{{peraddr_pincode}}" placeholder="Pincode">
-                        </td>
-                      </tr>
-                    </table>
-                  </ion-card-content>
-              </ion-card>
+  </div>
+</ion-content>
 
-              <ion-card>
-                <ion-item>
-                  <button ion-button block >UPDATE</button>
-                </ion-item>                   
-              </ion-card>
-        </div>
-    </div>
-  </ion-content>

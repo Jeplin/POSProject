@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApidataProvider } from '../../providers/apidata/apidata';
 import { Storage } from '@ionic/storage';
+import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 
 /**
  * Generated class for the ProfilePage page.
@@ -45,12 +46,14 @@ export class ProfilePage {
   allData:any;
   profileData: any;
 
+  UserId:any;
+
   user = {
     name: '',
     profileImage: 'assets/imgs/logo.png',
     coverImage: 'assets/imgs/1.jpg',
     occupation: 'Developer',
-    location: 'India,IND',
+    location: '',
     description: '',
   };
 
@@ -61,7 +64,7 @@ export class ProfilePage {
   countrySelectCur:any;
   countrySelectPer:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private profile:ApidataProvider,private storage:Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private profile:ApidataProvider,private storage:Storage,private alertCtrl:AlertController) {
   
     this.getUserProfileData();
     this.isEdit=false;
@@ -126,10 +129,10 @@ export class ProfilePage {
   }
 
   getUserProfileData(){
-    let UserId="";
+    
     this.storage.get('userId').then((val)=>{
-      UserId=val;
-      console.log("userId",UserId);
+      this.UserId=val;
+      console.log("userId",this.UserId);
       this.profileDataApi(val);
     });
   }
@@ -142,6 +145,10 @@ export class ProfilePage {
       console.log("Profile : ",data[0]);
       if(data!=""){
         this.displayUserData(data[0]);
+      }
+      else{
+        this.showAlert("Oops!","Unable to load data..");
+        this.getUserProfileData();
       }
     });
   }
@@ -186,16 +193,114 @@ export class ProfilePage {
     }
     else{
       this.editButtontitle="Edit";
-      this.updateData();
+      //this.updateData();
     }
   }
 
-  updateData(){
+  updateClicked(){
     console.log("Update Data Clicked");
+
+    if(this.email==""){
+      this.email="NA";
+    }
+    if(this.contact==""){
+      this.contact="NA";
+    }
+    if(this.fathername==""){
+      this.fathername="NA";
+    }
+    if(this.mothername==""){
+      this.mothername="NA";
+    }
+    if(this.familynumber==""){
+      this.familynumber="NA";
+    }
+    if(this.curraddr_one==""){
+      this.curraddr_one="NA";
+    }
+    if(this.curraddr_two==""){
+      this.curraddr_two="NA";
+    }
+    if(this.curraddr_city==""){
+      this.curraddr_city="NA";
+    }
+    if(this.curraddr_state==""){
+      this.curraddr_state="NA";
+    }
+    if(this.countrySelectCur==""){
+      this.countrySelectCur="India";
+    }
+    if(this.curraddr_pincode==""){
+      this.curraddr_pincode="NA";
+    }
+
+    if(this.peraddr_one==""){
+      this.peraddr_one="NA";
+    }
+    if(this.peraddr_two==""){
+      this.peraddr_two="NA";
+    }
+    if(this.peraddr_city==""){
+      this.peraddr_city="NA";
+    }
+    if(this.peraddr_state==""){
+      this.peraddr_state="NA";
+    }
+    if(this.countrySelectPer==""){
+      this.countrySelectPer="India";
+    }
+    if(this.peraddr_pincode==""){
+      this.peraddr_pincode="NA";
+    }
+
+    let data={
+      id:this.UserId,
+      email:this.email,
+      contact:this.contact,
+      fatherName:this.fathername,
+      motherName:this.mothername,
+      familyContact:this.familynumber,
+      curAddr1:this.curraddr_one,
+      curAddr2:this.curraddr_two,
+      curCity:this.curraddr_city,
+      curState:this.curraddr_state,
+      curCountry:this.countrySelectCur,
+      curPin:this.curraddr_pincode,
+      perAddr1:this.peraddr_one,
+      perAddr2:this.peraddr_two,
+      perCity:this.peraddr_city,
+      perState:this.peraddr_state,
+      perCountry:this.countrySelectPer,
+      perPin:this.peraddr_pincode,
+    };
+
+    this.profile.updateProfileData(data).subscribe(data=>{
+      console.log("Update Success",data);
+      if(data!=""){
+        if(data['status']==true){
+          this.showAlert("","Updated Successfully!");
+          this.isEdit=!this.isEdit;
+          this.editButtontitle="Edit";
+          this.getUserProfileData();
+        }
+        else{
+          this.showAlert("Update Failed!","Unable to Update Profile Data..");
+        }
+      }
+      else{
+          this.showAlert("Update Failed!","Unable to Update Profile Data..");
+      }
+    });
+
   }
 
   showAlert(title,message){
-
+    let alert = this.alertCtrl.create({
+          title: title,
+          subTitle: message,
+          buttons: ['OK']
+        });
+        alert.present();
   }
   
 }

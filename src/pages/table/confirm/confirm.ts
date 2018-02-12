@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { ApidataProvider } from '../../../providers/apidata/apidata';
 import { Storage } from '@ionic/storage';
+import { AlertController } from 'ionic-angular/components/alert/alert-controller';
+import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 
 
 /**
@@ -21,9 +23,9 @@ export class ConfirmPage {
   userId="";
   orderData:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private viewCtrl:ViewController,private menuData:ApidataProvider,private storage:Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private viewCtrl:ViewController,private menuData:ApidataProvider,private storage:Storage,private alertCtrl:AlertController,private toastCtrl:ToastController) {
     
-     console.log("Cust Name : ",this.navParams.get('floorNo'));
+    console.log("Cust Name : ",this.navParams.get('floorNo'));
     console.log("Data Order : ",this.navParams.get('order'));
 
     this.orderData=this.navParams.get('order');
@@ -45,8 +47,13 @@ export class ConfirmPage {
 
     this.menuData.postOrderedMenu(data).subscribe(data=>{
       console.log("On Success -- cnfrm",data);
-      this.viewCtrl.dismiss('okay');
-
+      if(data!=""){
+        this.showToast("Update Successfully");
+        this.viewCtrl.dismiss('okay');
+      }
+      else{
+        this.showToast("Update failed!");
+      }
     },error=>{
       console.log("Server Error");
     });    
@@ -54,6 +61,23 @@ export class ConfirmPage {
 
   cancelDismiss(){
     this.viewCtrl.dismiss('');
+  }
+
+  showAlert(title,message){
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: message,
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  showToast(message) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000
+    });
+    toast.present();
   }
 
 }
