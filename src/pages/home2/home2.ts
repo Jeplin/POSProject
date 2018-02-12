@@ -5,6 +5,7 @@ import { ApidataProvider } from '../../providers/apidata/apidata';
 import { Home1Page } from '../home1/home1';
 import { TablePage } from '../table/table';
 import { TableDetailsProvider } from '../../providers/table-details/table-details';
+import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 
 /**
  * Generated class for the Home2Page page.
@@ -26,7 +27,7 @@ export class Home2Page {
   floorNo:number;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private layout:ApidataProvider,private floor:FloorCountProvider,private tableDetail:TableDetailsProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private layout:ApidataProvider,private floor:FloorCountProvider,private tableDetail:TableDetailsProvider,private alertCtrl:AlertController) {
     this.displayFloorUI();
     this.getLayoutData();
   }
@@ -47,10 +48,18 @@ export class Home2Page {
   getLayoutData(){
     this.layout.getLayoutData().subscribe(data =>{
       console.log(data);
-      this.layoutData=data;
+      if(data!=""){
+        this.layoutData=data;
       
-      console.log("data : ",this.layoutData[0]["floors"]);
-      this.dataFilterMethod();
+        console.log("data : ",this.layoutData[0]["floors"]);
+        this.dataFilterMethod();
+      }
+      else{
+        this.showAlert("Error!","Unable to fetch layout data!...");
+        this.getLayoutData();
+        this.displayFloorUI();
+      }
+      
 
     });
   }
@@ -91,6 +100,15 @@ export class Home2Page {
       this.navCtrl.setRoot(Home1Page);
     }
     
+  }
+
+  showAlert(title,message){
+    let alert = this.alertCtrl.create({
+          title: title,
+          subTitle: message,
+          buttons: ['OK']
+        });
+        alert.present();
   }
 
 }

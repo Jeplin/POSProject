@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApidataProvider } from '../../providers/apidata/apidata';
 import { Storage } from '@ionic/storage';
+import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 
 /**
  * Generated class for the AttendencePage page.
@@ -20,7 +21,7 @@ export class AttendencePage {
   attendenceData:any;
   totTime:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private attendence:ApidataProvider,private storage:Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private attendence:ApidataProvider,private storage:Storage,private alertCtrl:AlertController) {
 
     this.localStorage();
 
@@ -87,13 +88,24 @@ export class AttendencePage {
           this.totTime.push(totTimeStr);
 
           console.log("Test ",Hours,Min,totTimeStr);
-
-
         });
         console.log("Attendence :",this.attendenceData);
+      }
+      else{
+        this.showAlert("Unable to Fetch data!","Try again...");
+        this.localStorage();
       }  
       
     });
+  }
+
+  showAlert(title,message){
+    let alert = this.alertCtrl.create({
+          title: title,
+          subTitle: message,
+          buttons: ['OK']
+        });
+        alert.present();
   }
 
 

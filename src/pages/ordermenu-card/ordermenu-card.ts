@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApidataProvider } from '../../providers/apidata/apidata';
 import { OrdermenuProvider } from '../../providers/ordermenu/ordermenu';
+import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 
 /**
  * Generated class for the OrdermenuCardPage page.
@@ -20,7 +21,7 @@ export class OrdermenuCardPage {
   menuList:any;
   checkBoxArray:any;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams,private menuData:ApidataProvider,private orderMenu:OrdermenuProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private menuData:ApidataProvider,private orderMenu:OrdermenuProvider,private alertCtrl:AlertController) {
     this.checkBoxArray=[];
 
     // this.menuList=[
@@ -54,12 +55,16 @@ export class OrdermenuCardPage {
   getMenuData(){
     this.menuData.getMenuData().subscribe(data =>{
       console.log("Menu List : "+data);
-      this.menuList=data;
+      if(data!=""){
+        this.menuList=data;
 
-      this.menuList.forEach(element => {
-        this.checkBoxArray.push(false);
-      });
-
+        this.menuList.forEach(element => {
+          this.checkBoxArray.push(false);
+        });
+      }
+      else{
+        this.showAlert("Error!","Unable to fetch Menu Items");
+      }
     });
   }
 
@@ -94,6 +99,15 @@ export class OrdermenuCardPage {
     
     this.navCtrl.pop();
     //console.log("Alll Set -- ",allCheckedData);
+  }
+
+  showAlert(title,message){
+    let alert = this.alertCtrl.create({
+          title: title,
+          subTitle: message,
+          buttons: ['OK']
+        });
+        alert.present();
   }
 
 }

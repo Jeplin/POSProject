@@ -15,6 +15,7 @@ import { Storage } from '@ionic/storage';
 
 import * as moment from 'moment';
 import { ApidataProvider } from '../../providers/apidata/apidata';
+import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 
 
 /**
@@ -38,7 +39,7 @@ export class NavmenuPage {
   
     pages: Array<{title: string, component: any, icon:any}>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private storage:Storage,private apiCall:ApidataProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private storage:Storage,private apiCall:ApidataProvider,private alertCtrl:AlertController) {
 
     storage.get('username').then((val)=>{
       this.user=val;
@@ -80,10 +81,6 @@ export class NavmenuPage {
       console.log(val);
       this.setUserAttendance(val);
     });
-
-    this.storage.clear();
-    
-    this.navCtrl.setRoot(LoginPage);
   }
 
   setUserAttendance(attId){
@@ -96,9 +93,24 @@ export class NavmenuPage {
       att_id:attId
     }
      this.apiCall.setAttendance(data).subscribe(data=>{
-       console.log(data['message']);
+       console.log(data);
+       if(data["status"]==true){
+        this.showAlert("Logout Successfully!","");
+        this.storage.clear();
+    
+        this.navCtrl.setRoot(LoginPage);
+       }
        //this.storage.set('attId',data['message']);
      });
   }
+  showAlert(title,message){
+    let alert = this.alertCtrl.create({
+          title: title,
+          subTitle: message,
+          buttons: ['OK']
+        });
+        alert.present();
+  }
+
 
 }

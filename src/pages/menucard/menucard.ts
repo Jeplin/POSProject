@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApidataProvider } from '../../providers/apidata/apidata';
+import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 
 /**
  * Generated class for the MenucardPage page.
@@ -17,7 +18,7 @@ import { ApidataProvider } from '../../providers/apidata/apidata';
 export class MenucardPage {
   menuList:any;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams,private menuData:ApidataProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private menuData:ApidataProvider,private alertCtrl:AlertController) {
     this.getMenuData();
   }
 
@@ -29,8 +30,23 @@ export class MenucardPage {
   getMenuData(){
     this.menuData.getMenuData().subscribe(data =>{
       console.log("Menu List : "+data);
-      this.menuList=data;
+      if(data!=""){
+        this.menuList=data;
+      }
+      else{
+        this.showAlert("Error!","Unable to fetch menu items");
+        this.getMenuData();
+      }
+      
     });
+  }
+  showAlert(title,message){
+    let alert = this.alertCtrl.create({
+          title: title,
+          subTitle: message,
+          buttons: ['OK']
+        });
+        alert.present();
   }
 
 }

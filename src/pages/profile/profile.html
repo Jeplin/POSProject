@@ -154,19 +154,19 @@
                 <tr>
                   <td class="col1">Email : </td>
                   <td>
-                    <input type="email" name="email" value="{{email}}" placeholder="Email">
+                    <input type="email" name="email" [(ngModel)]="email" value="{{email}}" placeholder="Email">
                   </td>
                 </tr>
-                <tr>
+                <!-- <tr>
                   <td class="col1">DOB : </td>
                   <td>
-                    <input type="text" name="dob" value="{{dob}}" placeholder="DOB">
+                    <input type="text" name="dob" [(ngModel)]="dob" value="{{dob}}" placeholder="DOB">
                   </td>
-                </tr>
+                </tr> -->
                 <tr>
                   <td class="col1">Phone Number : </td>
                   <td>
-                    <input type="tel" name="phone" value="{{contact}}" placeholder="phone number">
+                    <input type="tel" name="phone" [(ngModel)]="contact" value="{{contact}}" placeholder="phone number">
                   </td>
                 </tr>
               </table>
@@ -182,19 +182,19 @@
                   <tr>
                     <td class="col1">Father's Name : </td>
                     <td>
-                      <input type="text" name="fathername" value="{{fathername}}" placeholder="Father's Name">
+                      <input type="text" name="fathername" [(ngModel)]="fathername" value="{{fathername}}" placeholder="Father's Name">
                     </td>
                   </tr>
                   <tr>
                     <td class="col1">Mother's Name : </td>
                     <td>
-                      <input type="text" name="mothername" value="{{mothername}}" placeholder="Mother's Name">
+                      <input type="text" name="mothername" [(ngModel)]="mothername" value="{{mothername}}" placeholder="Mother's Name">
                     </td>
                   </tr>
                   <tr>
                     <td class="col1">Phone Number : </td>
                     <td>
-                      <input type="tel" name="phone" value="{{familynumber}}" placeholder="Phone Number">
+                      <input type="tel" name="phone" [(ngModel)]="familynumber" value="{{familynumber}}" placeholder="Phone Number">
                     </td>
                   </tr>
                 </table>
@@ -210,25 +210,25 @@
                   <tr>
                     <td class="col1">Address 1 : </td>
                     <td>
-                      <input type="textarea" name="address1" value="{{curraddr_one}}" placeholder="Address 1">
+                      <input type="textarea" name="address1" [(ngModel)]="curraddr_one" value="{{curraddr_one}}" placeholder="Address 1">
                     </td>
                   </tr>
                   <tr>
                     <td class="col1">Address 2 : </td>
                     <td>
-                      <input type="textarea" name="address2" value="{{curraddr_two}}" placeholder="Address 2">
+                      <input type="textarea" name="address2" [(ngModel)]="curraddr_two" value="{{curraddr_two}}" placeholder="Address 2">
                     </td>
                   </tr>
                   <tr>
                     <td class="col1">City : </td>
                     <td>
-                      <input type="text" name="city" value="{{curraddr_city}}" placeholder="City">
+                      <input type="text" name="city" [(ngModel)]="curraddr_city" value="{{curraddr_city}}" placeholder="City">
                     </td>
                   </tr>
                   <tr>
                     <td class="col1">State : </td>
                     <td>
-                      <input type="text" name="state" value="{{curraddr_state}}" placeholder="State">
+                      <input type="text" name="state" [(ngModel)]="curraddr_state" value="{{curraddr_state}}" placeholder="State">
                     </td>
                   </tr>
                   <tr>
@@ -242,7 +242,7 @@
                   <tr>
                     <td class="col1">Pincode : </td>
                     <td>
-                      <input type="text" name="pincode" value="{{curraddr_pincode}}" placeholder="Pincode">
+                      <input type="text" name="pincode" [(ngModel)]="curraddr_pincode" value="{{curraddr_pincode}}" placeholder="Pincode">
                     </td>
                   </tr>
                 </table>
@@ -258,39 +258,39 @@
                       <tr>
                         <td class="col1">Address 1 : </td>
                         <td>
-                          <input type="textarea" name="address1" value="{{peraddr_one}}" placeholder="Address 1">
+                          <input type="textarea" name="address1" [(ngModel)]="peraddr_one" value="{{peraddr_one}}" placeholder="Address 1">
                         </td>
                       </tr>
                       <tr>
                         <td class="col1">Address 2 : </td>
                         <td>
-                          <input type="textarea" name="address2" value="{{peraddr_two}}" placeholder="Address 2">
+                          <input type="textarea" name="address2" [(ngModel)]="peraddr_two" value="{{peraddr_two}}" placeholder="Address 2">
                         </td>
                       </tr>
                       <tr>
                         <td class="col1">City : </td>
                         <td>
-                          <input type="text" name="city" value="{{peraddr_city}}" placeholder="City">
+                          <input type="text" name="city" [(ngModel)]="peraddr_city" value="{{peraddr_city}}" placeholder="City">
                         </td>
                       </tr>
                       <tr>
                         <td class="col1">State : </td>
                         <td>
-                          <input type="text" name="state" value="{{peraddr_state}}" placeholder="State">
+                          <input type="text" name="state" [(ngModel)]="peraddr_state" value="{{peraddr_state}}" placeholder="State">
                         </td>
                       </tr>
                       <tr>
                         <td class="col1">Country : </td>
                         <td>
                           <ion-select [(ngModel)]="countrySelectPer">
-                            <ion-option *ngFor="let country of countries" value="{{country}}">{{country}}</ion-option>
+                            <ion-option *ngFor="let country of countries" [(ngModel)]="country" value="{{country}}">{{country}}</ion-option>
                           </ion-select>
                         </td>
                       </tr>
                       <tr>
                         <td class="col1">Pincode : </td>
                         <td>
-                          <input type="text" name="pincode" value="{{peraddr_pincode}}" placeholder="Pincode">
+                          <input type="text" name="pincode" [(ngModel)]="peraddr_pincode" value="{{peraddr_pincode}}" placeholder="Pincode">
                         </td>
                       </tr>
                     </table>
@@ -299,7 +299,7 @@
 
               <ion-card>
                 <ion-item>
-                  <button ion-button block >UPDATE</button>
+                  <button ion-button block (click)="updateClicked()">UPDATE</button>
                 </ion-item>                   
               </ion-card>
         </div>

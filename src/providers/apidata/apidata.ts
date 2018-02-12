@@ -54,6 +54,15 @@ export class ApidataProvider {
     }).do(res=>console.log(res));
   }
 
+  updateProfileData(data){
+    console.log("Profile :",data);
+    return this.http.post(this.apiURL+'updateUserDetail.php',data,{
+      headers : {
+          'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+      }
+    }).do(res=>console.log(res));
+  }
+
   postOrderedMenu(data){
     return this.http.post(this.apiURL+"addTableOrders.php",data,{
       headers : {
