@@ -39,16 +39,13 @@
             <th>B</th>
           </tr>
           <tr *ngFor="let order of dailyArray">
-            <td>today</td>
-            <td>JD</td>
-            <td>1/5</td>
-            <td>&#8377; 2000 /-</td>
+            <td>{{order.modified_date}}</td>
+            <td>{{order.customerName}}</td>
+            <td>{{order.tableNo}}/{{order.floorNo}}</td>
+            <td>&#8377; {{order.totalBill}} /-</td>
           </tr>
           <tr>
-            <td>today</td>
-            <td>JD</td>
-            <td>1/5</td>
-            <td>&#8377; 2000 /-</td>
+            <td colspan="4" center>All data loaded</td>
           </tr>
         </table>
       </div>
@@ -66,16 +63,13 @@
             <th>B</th>
           </tr>
           <tr *ngFor="let order of weeklyArray">
-            <td>Week</td>
-            <td>JD</td>
-            <td>1/5</td>
-            <td>&#8377; 2000 /-</td>
+            <td>{{order.modified_date}}</td>
+            <td>{{order.customerName}}</td>
+            <td>{{order.tableNo}}/{{order.floorNo}}</td>
+            <td>&#8377; {{order.totalBill}} /-</td>
           </tr>
           <tr>
-            <td>Week</td>
-            <td>JD</td>
-            <td>1/5</td>
-            <td>&#8377; 2000 /-</td>
+            <td colspan="4" center>All data loaded</td>
           </tr>
         </table>
       </div>
@@ -93,16 +87,13 @@
             <th>B</th>
           </tr>
           <tr *ngFor="let order of monthlyArray">
-            <td>Month</td>
-            <td>JD</td>
-            <td>1/5</td>
-            <td>&#8377; 2000 /-</td>
+            <td>{{order.modified_date}}</td>
+            <td>{{order.customerName}}</td>
+            <td>{{order.tableNo}}/{{order.floorNo}}</td>
+            <td>&#8377; {{order.totalBill}} /-</td>
           </tr>
           <tr>
-            <td>Month</td>
-            <td>JD</td>
-            <td>1/5</td>
-            <td>&#8377; 2000 /-</td>
+            <td colspan="4" center>All data loaded</td>
           </tr>
         </table>
       </div>

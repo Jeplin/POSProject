@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApidataProvider } from '../../providers/apidata/apidata';
 import { Storage } from '@ionic/storage';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
+import * as moment from 'moment';
 
 /**
  * Generated class for the AttendencePage page.
@@ -47,23 +48,32 @@ export class AttendencePage {
       if(data!=""){
         this.attendenceData=data[0];
         console.log("Attendence :",this.attendenceData);
+
         this.attendenceData.forEach(element => {
           console.log("Sign in ",element['id']);
 
-          let strDate1:string=element['in_time'];
-          let strDate2:string=element['out_time'];
+          let strDate1=element['in_time'];
+          let strDate2=element['out_time'];
+          console.log(strDate1);
+          console.log(strDate2);
+
           if(strDate1==""){
             let totTimeStr:string="";
             this.totTime.push(totTimeStr);
           }
-          else if(strDate2==""){
+          else if(strDate2==''){
             let totTimeStr:string="";
             this.totTime.push(totTimeStr);
           }
           else{
-            let date1:any=new Date(strDate1);
-            let date2:any=new Date(strDate2);
-            let time = date2 - date1;  //msec
+            let strDate1Rep=strDate1.replace(/-/g,'/');
+            let strDate2Rep=strDate2.replace(/-/g,'/');
+            let date1=new Date(strDate1Rep);
+            console.log(date1);
+            let date2=new Date(strDate2Rep);
+            console.log(date2);
+            let time = date2.getTime() - date1.getTime();  //msec
+
             let totSec=time/1000; //sec
             let hoursDiff:number = totSec / (3600); //hours
             totSec=totSec%3600;
@@ -98,7 +108,7 @@ export class AttendencePage {
             console.log("Test ",Hours,Min,totTimeStr);
           }
         });
-        console.log("Attendence :",this.attendenceData);
+        //console.log("Attendence :",this.attendenceData);
       }
       else{
         this.showAlert("Error!","Unable to load data...");
