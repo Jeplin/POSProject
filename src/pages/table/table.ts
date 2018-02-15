@@ -14,6 +14,7 @@ import { ConfirmPage } from './confirm/confirm';
 import { EditPage } from './edit/edit';
 import { CustnamePage } from './custname/custname';
 import { Storage } from '@ionic/storage';
+import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 
 //import { trigger, state, style, animate, transition } from '@angular/animations';
 
@@ -70,7 +71,7 @@ export class TablePage {
 
   customerName:string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private menuData:ApidataProvider,private tableDetail:TableDetailsProvider,private floorDetail:FloorCountProvider,private orderMenu:OrdermenuProvider,private modalCtrl:ModalController,private storage:Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private menuData:ApidataProvider,private tableDetail:TableDetailsProvider,private floorDetail:FloorCountProvider,private orderMenu:OrdermenuProvider,private modalCtrl:ModalController,private storage:Storage,private alertCtrl:AlertController) {
     this.getMenuData();
 
     this.orderMenu.resetAllData();
@@ -140,8 +141,10 @@ export class TablePage {
   
           this.isBill=true;
         }
-      },error=>{
-        console.log("Server Error to get check");
+      },err=>{
+        console.log("my error :");
+        this.showAlert("Server Error!","Please check your connect and try again..");
+        
       });
     }
   }
@@ -181,6 +184,10 @@ export class TablePage {
     this.menuData.getMenuData().subscribe(data =>{
       console.log("Menu List : "+data);
       this.menuList=data;
+    },err=>{
+      console.log("my error :");
+      this.showAlert("Server Error!","Please check your connect and try again..");
+      
     });
   }
 
@@ -349,8 +356,10 @@ export class TablePage {
         console.log("cust23:",this.orderedList);
         this.isBill=true;
 
-      },error=>{
-        console.log("Server Error to get check");
+      },err=>{
+        console.log("my error :");
+        this.showAlert("Server Error!","Please check your connect and try again..");
+        
       });
     }
 
@@ -367,6 +376,15 @@ export class TablePage {
   
     openmenu(){
       this.navCtrl.push(OrdermenuCardPage);
+    }
+
+    showAlert(title,message){
+      let alert = this.alertCtrl.create({
+        title: title,
+        subTitle: message,
+        buttons: ['OK']
+      });
+      alert.present();
     }
 
 }

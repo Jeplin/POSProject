@@ -59,6 +59,10 @@ export class Home2Page {
         this.getLayoutData();
         this.displayFloorUI();
       }
+    },err=>{
+      console.log("my error :");
+      this.showAlert("Server Error!","Please check your connect and try again..");
+      
     });
   }
 

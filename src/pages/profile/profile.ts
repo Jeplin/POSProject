@@ -290,6 +290,10 @@ export class ProfilePage {
       else{
           this.showAlert("Update Failed!","Unable to Update Profile Data..");
       }
+    },err=>{
+      console.log("my error :");
+      this.showAlert("Server Error!","Please check your connect and try again..");
+      
     });
 
   }

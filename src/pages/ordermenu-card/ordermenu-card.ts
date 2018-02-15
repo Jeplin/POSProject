@@ -67,6 +67,10 @@ export class OrdermenuCardPage {
         this.showAlert("Oops!","Unable to load data..");
         this.getMenuData();
       }
+    },err=>{
+      console.log("my error :");
+      this.showAlert("Server Error!","Please check your connect and try again..");
+      
     });
   }
 

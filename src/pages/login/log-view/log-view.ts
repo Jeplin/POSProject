@@ -98,7 +98,12 @@ export class LogViewPage {
         }
         this.username="";
         this.password="";
-      })
+      },err=>{
+        console.log("my error :");
+        this.showAlert("Server Error!","Please check your connect and try again..");
+        
+      });
+      
     }
   }
 

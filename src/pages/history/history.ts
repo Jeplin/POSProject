@@ -63,6 +63,10 @@ export class HistoryPage {
         this.showAlert("Oops Error!","Unable to fetch history data ...");
         this.localStorage();
       }
+    },err=>{
+      console.log("my error :");
+      this.showAlert("Server Error!","Please check your connect and try again..");
+      
     });
   }
 
