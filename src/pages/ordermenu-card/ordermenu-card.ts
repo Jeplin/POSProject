@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApidataProvider } from '../../providers/apidata/apidata';
 import { OrdermenuProvider } from '../../providers/ordermenu/ordermenu';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
+import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 
 /**
  * Generated class for the OrdermenuCardPage page.
@@ -20,8 +21,9 @@ export class OrdermenuCardPage {
 
   menuList:any;
   checkBoxArray:any;
+  loading:any;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams,private menuData:ApidataProvider,private orderMenu:OrdermenuProvider,private alertCtrl:AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private menuData:ApidataProvider,private orderMenu:OrdermenuProvider,private alertCtrl:AlertController,private loadingCtrl:LoadingController) {
     
     this.checkBoxArray=[];
 
@@ -54,9 +56,12 @@ export class OrdermenuCardPage {
   }
 
   getMenuData(){
+    //this.showLoader();
     this.menuData.getMenuData().subscribe(data =>{
       console.log("Menu List : "+data);
       if(data!=""){
+
+        //this.loading.dismiss();
         this.menuList=data;
 
         this.menuList.forEach(element => {
@@ -64,10 +69,12 @@ export class OrdermenuCardPage {
         });
       }
       else{
+        //this.loading.dismiss();
         this.showAlert("Oops!","Unable to load data..");
-        this.getMenuData();
+        //this.getMenuData();
       }
     },err=>{
+      //this.loading.dismiss();
       console.log("my error :");
       this.showAlert("Server Error!","Please check your connect and try again..");
       
@@ -107,11 +114,33 @@ export class OrdermenuCardPage {
     //console.log("Alll Set -- ",allCheckedData);
   }
 
+  showLoader(){
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+  
+    this.loading.present();
+  }
+
   showAlert(title,message){
     let alert = this.alertCtrl.create({
       title: title,
       subTitle: message,
-      buttons: ['OK']
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Reload',
+          handler: () => {
+            this.getMenuData();
+            console.log('Agree clicked');
+          }
+        }
+      ]
     });
     alert.present();
   }

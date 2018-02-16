@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import { ApidataProvider } from '../../providers/apidata/apidata';
 import { Storage } from '@ionic/storage';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
+import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 
 /**
  * Generated class for the HistoryPage page.
@@ -22,8 +23,9 @@ export class HistoryPage {
   dailyArray:any;
   weeklyArray:any;
   monthlyArray:any;
+  loading:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private apiCall:ApidataProvider,private storage:Storage,private alertCtrl:AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private apiCall:ApidataProvider,private storage:Storage,private alertCtrl:AlertController,private loadingCtrl:LoadingController) {
     this.order="today";
 
     
@@ -34,7 +36,9 @@ export class HistoryPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad HistoryPage');
   }
+
   localStorage(){
+    //this.showLoader();
     this.storage.get('userId').then((val)=>{
       console.log(val);
       this.getHistoryData(val);
@@ -50,6 +54,7 @@ export class HistoryPage {
     this.apiCall.getHistoryData(data).subscribe(data=>{
       //console.log("His :",data);
       if(data!=""){
+        //this.loading.dismiss();
         this.dailyArray=[];
         this.weeklyArray=[];
         this.monthlyArray=[];
@@ -60,13 +65,15 @@ export class HistoryPage {
         });
       }
       else{
-        this.showAlert("Oops Error!","Unable to fetch history data ...");
-        this.localStorage();
+        //this.loading.dismiss();
+        this.showAlert("Oops Error!","Unable to fetch history data...");
+        
       }
     },err=>{
+      //this.loading.dismiss();
       console.log("my error :");
       this.showAlert("Server Error!","Please check your connect and try again..");
-      
+     
     });
   }
 
@@ -99,11 +106,34 @@ export class HistoryPage {
         }
 
   }
+
+  showLoader(){
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+  
+    this.loading.present();
+  }
+
   showAlert(title,message){
     let alert = this.alertCtrl.create({
       title: title,
       subTitle: message,
-      buttons: ['OK']
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Reload',
+          handler: () => {
+            this.localStorage();
+            console.log('Agree clicked');
+          }
+        }
+      ]
     });
     alert.present();
   }

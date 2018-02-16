@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApidataProvider } from '../../providers/apidata/apidata';
 import { Storage } from '@ionic/storage';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
+import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 
 /**
  * Generated class for the ProfilePage page.
@@ -63,8 +64,9 @@ export class ProfilePage {
   countries:any;
   countrySelectCur:any;
   countrySelectPer:any;
+  loading:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private profile:ApidataProvider,private storage:Storage,private alertCtrl:AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private profile:ApidataProvider,private storage:Storage,private alertCtrl:AlertController,private loadingCtrl:LoadingController) {
   
     this.getUserProfileData();
     this.isEdit=false;
@@ -129,7 +131,7 @@ export class ProfilePage {
   }
 
   getUserProfileData(){
-    
+   // this.showLoader();
     this.storage.get('userId').then((val)=>{
       this.UserId=val;
       console.log("userId",this.UserId);
@@ -144,12 +146,17 @@ export class ProfilePage {
       //this.allData=data[0];
       console.log("Profile : ",data[0]);
       if(data!=""){
+        //this.loading.dismiss();
         this.displayUserData(data[0]);
       }
       else{
+       // this.loading.dismiss();
         this.showAlert("Oops!","Unable to load data..");
-        this.getUserProfileData();
+        //this.getUserProfileData();
       }
+    },err=>{
+      //this.loading.dismiss();
+      this.showAlert("Server Error!","Please check your connection and try again..");
     });
   }
 
@@ -298,13 +305,35 @@ export class ProfilePage {
 
   }
 
+  showLoader(){
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+  
+    this.loading.present();
+  }
+
   showAlert(title,message){
     let alert = this.alertCtrl.create({
-          title: title,
-          subTitle: message,
-          buttons: ['OK']
-        });
-        alert.present();
+      title: title,
+      subTitle: message,
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Reload',
+          handler: () => {
+            this.getUserProfileData();
+            console.log('Agree clicked');
+          }
+        }
+      ]
+    });
+    alert.present();
   }
   
 }

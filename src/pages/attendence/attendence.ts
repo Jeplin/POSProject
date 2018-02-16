@@ -4,6 +4,7 @@ import { ApidataProvider } from '../../providers/apidata/apidata';
 import { Storage } from '@ionic/storage';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 import * as moment from 'moment';
+import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 
 /**
  * Generated class for the AttendencePage page.
@@ -21,9 +22,11 @@ export class AttendencePage {
 
   attendenceData:any;
   totTime:any;
+  loading:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private attendence:ApidataProvider,private storage:Storage,private alertCtrl:AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private attendence:ApidataProvider,private storage:Storage,private alertCtrl:AlertController,private loadingCtrl:LoadingController) {
 
+    
     this.localStorage();
 
   }
@@ -33,6 +36,7 @@ export class AttendencePage {
     
   }
   localStorage(){
+    //this.showLoader();
     this.storage.get('userId').then((val)=>{
       console.log(val);
       this.getUserAttendence(val);
@@ -48,6 +52,8 @@ export class AttendencePage {
       if(data!=""){
         this.attendenceData=data[0];
         console.log("Attendence :",this.attendenceData);
+
+        //this.loading.dismiss();
 
         this.attendenceData.forEach(element => {
           console.log("Sign in ",element['id']);
@@ -111,22 +117,46 @@ export class AttendencePage {
         //console.log("Attendence :",this.attendenceData);
       }
       else{
+        //this.loading.dismiss();
         this.showAlert("Error!","Unable to load data...");
-        this.localStorage();
+        
       }  
       
     },err=>{
+      //this.loading.dismiss();
       console.log("my error :");
       this.showAlert("Server Error!","Please check your connect and try again..");
       
     });
   }
 
+  showLoader(){
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+  
+    this.loading.present();
+  }
+
   showAlert(title,message){
     let alert = this.alertCtrl.create({
       title: title,
       subTitle: message,
-      buttons: ['OK']
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Reload',
+          handler: () => {
+            this.localStorage();
+            console.log('Agree clicked');
+          }
+        }
+      ]
     });
     alert.present();
   }

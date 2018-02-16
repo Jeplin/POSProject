@@ -42,21 +42,22 @@ page-home1 {
         text-align: center;
     }
     ion-grid{
-        text-align: center;
-        margin: auto;
+        text-align: center !important;
+        margin: auto !important;
         padding: 0;
-        vertical-align: center;
+        vertical-align: center !important;
     }
     ion-row{
-        text-align: center;
-        vertical-align: center;
-        margin: auto;
+        text-align: center !important;
+        vertical-align: center !important;
+        margin: auto !important;
     }
     ion-col{
-        margin:auto;
+        margin:auto !important;
         padding: 0;
-        text-align: center;
-        vertical-align: center;
+        text-align: center !important;
+        vertical-align: center !important;
+        
     }
     .tableDiv{
         background: url("../assets/imgs/cattelan.jpg");
@@ -64,7 +65,7 @@ page-home1 {
         background-size: 100% 100%;
         width: 100px;
         height: 100px;
-        margin: 0;
+        margin: auto;
         border-radius: 4px;
     }
     .avalCss{

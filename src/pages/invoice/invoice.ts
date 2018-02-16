@@ -33,8 +33,6 @@ export class InvoicePage {
 
   billOrdered:any;
 
-
-
   billData:any;
 
   pdfObj=null;
@@ -51,14 +49,16 @@ export class InvoicePage {
     let tempBill=bill[0].allorders;
     this.orderedId=bill[0].id;
     let totPrices:number=0;
+    if(tempBill!=""){
+        tempBill.forEach(element => {
+            let subBill=element.orders;
+            subBill.forEach(element1 => {
+                this.billOrdered.push(element1);
+                totPrices=totPrices+parseInt(element1.tot_price);
+            }); 
+        });
+    }
     
-    tempBill.forEach(element => {
-        let subBill=element.orders;
-        subBill.forEach(element1 => {
-            this.billOrdered.push(element1);
-            totPrices=totPrices+parseInt(element1.tot_price);
-        }); 
-    });
     this.totPrice=totPrices;
     this.orderedDate=bill[0].modified_date; 
 
@@ -83,11 +83,12 @@ export class InvoicePage {
     
   }
 
-
-
   createPDF(){
+
     let allOrders=this.billData['orders'];
     
+    console.log(allOrders);
+
     var items = allOrders.map(function(item) {
       return [item.item, item.quant, item.tot_price];
     });

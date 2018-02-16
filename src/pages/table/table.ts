@@ -15,6 +15,7 @@ import { EditPage } from './edit/edit';
 import { CustnamePage } from './custname/custname';
 import { Storage } from '@ionic/storage';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
+import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 
 //import { trigger, state, style, animate, transition } from '@angular/animations';
 
@@ -71,7 +72,8 @@ export class TablePage {
 
   customerName:string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private menuData:ApidataProvider,private tableDetail:TableDetailsProvider,private floorDetail:FloorCountProvider,private orderMenu:OrdermenuProvider,private modalCtrl:ModalController,private storage:Storage,private alertCtrl:AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private menuData:ApidataProvider,private tableDetail:TableDetailsProvider,private floorDetail:FloorCountProvider,private orderMenu:OrdermenuProvider,private modalCtrl:ModalController,private storage:Storage,private alertCtrl:AlertController,private loadingCtrl:LoadingController) {
+    
     this.getMenuData();
 
     this.orderMenu.resetAllData();

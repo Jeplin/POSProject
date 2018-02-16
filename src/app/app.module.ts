@@ -46,7 +46,6 @@ import { LogViewPage } from '../pages/login/log-view/log-view';
 
 import { IonicStorageModule } from '@ionic/storage';
 
-
 @NgModule({
   declarations: [
     MyApp,
