@@ -38,10 +38,11 @@ export class InvoicePage {
   pdfObj=null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,private plt:Platform,private file:File,private fileOpener:FileOpener,private apiServe:ApidataProvider) {
+    
     let bill=navParams.get("orderBill");
-    // console.log("All Final Bill :",billData);
-    // let tableID=navParams.get("tableId");
-    // console.log("Table Id :",tableID);
+     console.log("All Final Bill :",bill);
+    this.tableID=navParams.get("tableId");
+    console.log("Table Id :",this.tableID);
 
     this.billOrdered=[];
     this.custName=bill[0].customerName;
@@ -63,8 +64,8 @@ export class InvoicePage {
     this.orderedDate=bill[0].modified_date; 
 
     this.billData=bill[0];
-    console.log("Bill Data :",this.billData);
-    console.log("All Ordered :",this.billData['orders']);
+    console.log("Bill Data :",this.totPrice);
+    console.log("All Ordered :",this.billData['allorders']);
 
   }
 
@@ -73,6 +74,7 @@ export class InvoicePage {
   }
 
   doneClicked(){
+    console.log("Table Id :",this.tableID ," Ordered Id :",this.orderedId);
     let data={tableId:this.tableID,orderedId:this.orderedId};
     this.apiServe.updateTableStatus(data).subscribe(data=>{
       console.log("Done Success ");
@@ -85,14 +87,16 @@ export class InvoicePage {
 
   createPDF(){
 
-    let allOrders=this.billData['orders'];
+    //let allOrders=this.billData['allorders'];
+    let allOrders=this.billOrdered;
     
-    console.log(allOrders);
+    console.log("Create :",allOrders);
 
     var items = allOrders.map(function(item) {
       return [item.item, item.quant, item.tot_price];
     });
 
+    console.log("Print Items :",items);
     var dd = {
         content: [
             { text: 'INVOICE', style: 'header'},
@@ -176,6 +180,8 @@ export class InvoicePage {
         }
     }
     this.pdfObj = pdfMake.createPdf(dd);
+
+    this.downloadPDF();
     
   }
 
